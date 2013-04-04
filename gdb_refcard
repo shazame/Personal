@@ -1,0 +1,86 @@
+==============================================================================
+=================================== BASICS ===================================
+==============================================================================
+
+help <cmd>
+ex: help breakpoints
+
+r
+-> run (start the program)
+
+c
+-> continue (continue after a breakpoint)
+
+b[r[eak]] main
+-> puts a breakpoint at function main
+
+bt
+-> backtrace
+
+n
+-> next (go to next instruction, do not go into functions)
+
+s
+-> step (go to next instruction, go into functions)
+
+l [<line_number>]
+-> list
+
+print/inspect <variable>
+print &<variable>
+print *<pointer>
+
+display <EXP>
+-> print the value of EXP each time the program stops
+
+finish
+-> jump to the end of the current function
+
+
+==============================================================================
+================================== ADVENCED ==================================
+==============================================================================
+
+i r
+-> info registers
+
+i f
+-> info function?
+
+disas main
+-> (disassemble main)
+
+printf "%s", 0x80c56e8
+-> print string at 0x80c56e8
+
+x ADDRESS
+-> see help x
+ex: x /20c buffer
+    x /20s buffer
+    x /20i main
+
+
+==============================================================================
+================================== SPECIALS ==================================
+==============================================================================
+
+s i
+-> step at instruction level
+
+tty /dev/pts/8
+-> set output to another tty
+
+watch
+-> see help watch
+
+commands
+-> see help watch
+
+find
+
+until
+
+maintenance info
+maintenance info sections
+maintenance info symtabs
+maintenance info breakpoints

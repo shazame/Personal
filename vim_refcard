@@ -1,0 +1,169 @@
+J -> supprimer saut de ligne
+K -> rechercher le mot/la selection dans le man
+
+H -> positionner curseur en haut du buffer
+M -> positionner curseur au milieu du buffer
+L -> positionner curseur en bas du buffer
+
+zz -> centre le buffer sur le curseur
+
+ga -> code ascii du caractère
+
+<c-e> -> insert from below
+<c-y> -> insert from above
+
+`` -> remettre le curseur à la position du dernier saut
+
+gqq -> formatter le texte pour ne pas dépasser les 78 caractères sur une ligne
+
+daw -> Delete A Word
+
+<c-x><c-f> -> (en mode insertion) autocomplétion avec nom d'un fichier
+<c-x><c-l> -> (en mode insertion) autocomplétion avec ligne du fichier
+<c-x><c-v> -> (en mode insertion) autocomplétion avec commande vim
+
+:put=(1+3)*4/1.2
+-> va écrire le résultat de l'expression
+
+:put='je '.'concatène'.' plusieurs chaines'
+-> va écrire le résultat de la concaténation des chaînes
+
+:for i in range(1,10) | if i > 5 | put =i | endif | endfor
+-> boucle et condition sous vim
+
+:diffthis -> pour comparer deux fichiers ouvert dans des fenètres splitées
+taper cette commande dans chacune des fenètre pour entrer dans le mode
+Ou entrer $vimdiff file1 file2 dans un shell
+
+:echo expand('%') -> pour afficher le nom du fichier
+:echo expand('%:e') -> pour afficher l'extension du fichier
+:echo expand('%:r') -> pour afficher le nom du fichier sans l'extension
+:echo expand('%:p') -> pour afficher le chemin complet du fichier
+:echo @% -> directory/name of file
+
+:if expand('%:e')=='c' | put='c' | elseif expand('%:e')=='h' | put='h' | else | put='perdu:'.expand('%:e') | endif
+-> affiche effectue un traitement suivant l'extension du fichier
+
+:args
+-> donne la liste des arguments avec lequel a été ouvert vim
+
+:argument
+-> ouvre vim avec les arguments initiaux
+
+:r <file>
+-> ajoute le contenu du fichier <file> au fichier en cours d'édition
+
+:r!ls
+-> permet d'insérer le résultat d'une commande dans un fichier
+
+!w puis ls
+ou
+!! puis <cmd>
+-> permet de remplacer la ligne courante par le résultat d'une commande
+
+:%!<cmd>
+-> applique une commande au fichier
+
+:%!sort
+-> trie un fichier
+
+:%!grep -E '^0|\<int\>'
+-> sélectionne les lignes d'un fichier commençant par un 0 ou contenant le mot 'int'
+Autre solution avec g :
+:g/^0|\<int\>/
+
+:tjump nom_fonction
+-> pour aller sur la déclaration d'un identifiant
+et
+<C-]>
+-> pour sauter à la déclaration d'un identifiant lorsque l'on est sur un
+occurence ce celui-ci.
+Remarque : ces deux commandes sont à combiner avec ctags
+
+<C-w><C-o>
+-> ferme touts les buffers sauf le buffer courant
+
+gU
+-> pour mettre en majuscule
+gu
+-> pour mettre en minuscule
+g~
+-> pour changer la case
+ex : gUiw -> met en majuscule l'inner word
+
+:g
+-> permet d'effectuer une sélection sur les lignes suivant une regexp
+:g/^\$
+-> selection toutes les lignes qui commencent par '$'
+:g/^->/s/pour/Pour/g
+-> permet de remplacer "pour" par "Pour" dans toutes les lignes qui commencent
+par "->"
+
+:%s/\n/\s/
+-> remplace tous les sauts de lignes par un espace
+\n caractérise un saut de ligne
+\s caractérise un espace
+
+/\s\s
+puis
+:s//\s/g
+-> recherche tous les double espaces, puis les remplace par un simple espace
+
+:s/^\(\w\)/\u\1/
+-> If the first character at the beginning of the current line is lowercase,
+switch it to uppercase using \u
+
+:%s/positionnner \(curseur\) \(..\)/Positionner \U\1 \u\2/
+-> a tester dans ce fichier pour comprendre
+When searching: 
+\(foo\) makes a backreference to foo. Parenthesis without escapes are literally matched. Here the \ is required for the closing \). 
+When replacing:
+\r is newline, \n is a null byte (0x00). 
+\& is ampersand (& is the text that matches the search pattern). 
+\1 inserts the text of the first backreference. \2 inserts the second backreference, and so on. 
+
+/permet
+puis
+:s//\U&/
+-> recherche le mot permet, puis le met tout en majuscule
+\l and \L for lower case
+
+:put=range(1,150)
+:put=map(range(1,150), 'printf(''%04d'', v:val)')
+-> pour écrire une liste de nombres de 2 façons différentes
+
+:.,$s/.*/"&"/
+-> pour mettre des guillemets au début et à la fin de toutes les lignes, 
+à partir de la ligne courante jusqu'à la dernière ligne
+
+:.,$g/^\d/exe "normal! \<C-a>"
+-> incrémente tous les nombres entre la ligne courante et la dernière ligne
+
+TOUJOURS PLUS PUISSANT :
+<range>perldo s/(\d+)/$1+1/ge 
+-> s'ils y a plusieurs nombres sur une ligne ils seront tous incrémentés
+À partir de là on peut faire ce que l'on veut :
+<range>perldo s/(\d+)/($1+5\/2)*3/ge 
+
+:g/^->/exe "normal: VU"
+-> met en majuscule toutes les lignes qui commencent par "->"
+:g/^->/s/.*/\U&/
+-> fait la même chose
+
+:g/^->/z#.3|echo "========="
+-> affiche le contexte du <pattern> donné
+
+:g/^/m0
+-> reverse a file
+:150,$g/^/m149
+-> reverse from ligne 150
+
+exemple de ligne à ajouter dans un fichier pour modifier la configuration de
+vim pour ce fichier
+dans un fichier .c :
+// vim: set tabstop=2 shiftwidth=2 softtabstop=2 expandtab:
+dans le vimrc : 
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker:
+
+gj and gk
+-> navigation in a long line

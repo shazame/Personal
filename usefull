@@ -1,0 +1,508 @@
+In the shell :
+
+================================================================================
+
+$ rm -f `find ./ -name '*~'`
+-> Supprimer tous les fichiers de sauvegarde du répertoire courant
+$ find ./ -name '*~' -delete
+-> mieux
+
+================================================================================
+
+$ cat > toto
+	blabla
+	coucou
+	C-c
+
+-> Écrit le texte suivant l'appui sur la touche <Entree> dans le fichier toto
+(remplacer > par >> pour ne pas écraser le fichier et écrire à la suite)
+
+================================================================================
+
+$ apt-cache search marvosym
+
+-> Cherche s'il y a un paquet disponible pour marvosym
+
+================================================================================
+
+$ cat /dev/urandom | od -td1 
+
+-> Génère des entiers aléatoires sur 1 octet
+-td1 peut être remplacé par -td2 pour générer des entiers sur 2 octets
+ou par -tx pour générer des nombres hexa
+ou par-tf pour générer des floats
+etc. (cf man od)
+
+Plus généralement cat /dev/urandom génère des octets aléatoirement
+
+Exemples d'utilisation :
+
+$ cat /dev/urandom | od -td1 | espeak -a 800 -s 300
+$ cat /dev/urandom | write david pts/1
+
+================================================================================
+
+$ du -sh
+
+-> Affiche l'espace disque occupé par le dossier courant
+Un fichier/dossier peut être spécifié :
+$ du -sh toto
+
+$ du -sh ./*
+Permet d'afficher la taille occupée par chaque fichier du dossier courant
+
+================================================================================
+
+$ grep -rn PATTERN *
+
+-> Affiche tous les fichiers contenant le PATTERN, avec la ligne correspondante
+Pratique pour chercher dans quel fichier se trouve la définition d'une fonction
+
+================================================================================
+
+hd -> commande bash qui affiche un fichier binaire en hexa avec 
+les code ascii des caractères à côté s'il en trouve
+ex : $ hd ./a.out
+
+================================================================================
+
+which -> permet de savoir dans quel dossier se trouve un programme
+ex : $ which prg
+	-> /usr/local/bin
+
+================================================================================
+
+ex : $ pgrep -l vim
+-> donne les numéros des processus vim
+
+================================================================================
+
+ex :
+$ mkfifo fifo
+$ tail -f -n +0 fifo | sbcl
+
+-> quand on écrit dans fifo, c'est redirigé vers sbcl
+
+================================================================================
+
+type -> encore mieux que which !
+alias -> donne l'alias correspondant
+
+================================================================================
+
+file -> indique le type d'un fichier
+
+================================================================================
+
+$ sudo tcpdump -i wlan0 -A | grep Cookie
+
+================================================================================
+
+$ sudo gpasswd -a david group
+-> pour ajouter david au groupe group
+
+$ adduser toto
+-> pour ajouter l'utilisateur toto
+$ passwd
+-> pour changer son mot de passe
+$ deluser --remove-home
+-> pour supprimer l'utilisateur et son home
+$ deluser --remove-all-files
+-> pour supprimer l'utilisateur et tous les fichiers qui lui appartiennent dont
+le home
+
+================================================================================
+
+$ ltrace
+$ strace
+$ strings
+$ nm
+
+->utile pour le hack
+
+================================================================================
+
+$ for i in `seq -w 0 99`;do echo 99; done
+-> une boucle for
+$ for (( i = 0 ; $i < 10 ; i = $i + 1 )); do echo 99; done
+-> une autre boucle for
+
+$ i=1;while [ `expr $i \* $i` -lt 10 ]; do echo $i; i=$((1+$i)); done
+-> une boucle while
+
+$ if [ `expr 5 % 3` = 0 ]; then echo toto; else echo tata; fi
+-> un if
+
+================================================================================
+
+$ date +"%N" | md5sum
+-> pour générer un mot de passe aléatoirement
+
+$ date +%s | sha256sum | base64 | head -c 32 ; echo
+
+$ < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;
+
+$ openssl rand -base64 32
+
+$ tr -cd '[:alnum:]' < /dev/urandom | fold -w30 | head -n1
+
+$ strings /dev/urandom | grep -o [[:alnum:]] | head -n 30 | tr -d '\n'; echo
+
+$ dd if=/dev/urandom bs=1 count=32 2>/dev/null | base64 -w 0 | rev | cut -b 2- | rev
+
+$ </dev/urandom tr -dc '12345!@#$%qwertQWERTasdfgASDFGzxcvbZXCVB' | head -c8; echo ""
+
+$ randpw(){ < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-16};echo;}
+-> pour définir une fonction de génération de mot de passe
+
+$ < /dev/urandom tr -dc '123456789AZERTYUIOPQSDFGHJKLMWXCVBNazertyuiopqsdfghjklmwxcvbn#*><' | head -c 10; echo
+
+================================================================================
+
+(source : introductiontoradare.sh level5 io.smashthestack.org)
+
+* Hashing a file or string
+
+$ md5sum filename
+$ sha1sum filename
+$ sha256sum filename
+$ echo -n "test" | md5sum
+
+* base conversion
+
+$ printf "%08x" 55
+$ echo "obase=16;55" |bc
+$ echo $((0xaaaa))
+
+$ xxd filename > hexdump
+#edit the hexdump file with your preferred editor
+$ xxd -r hexdump > newfile
+
+* Commandline (dis)assembler
+
+$ nasm filename
+$ echo "HELLO" |ndisasm -u -
+
+* binary diff
+
+using "cmp"
+diff -urpN <(od -tx1 -v -w1 file1) <(od -tx1 -v -w1 file2)
+
+* Extract information from binaries
+
+$ readelf -a filename
+$ objdump -x filename
+$ strings filename
+$ nm filename
+
+================================================================================
+
+$ f(){ echo coco; sleep 1; f;}
+-> pour définir une fonction récursive qui affiche coco toutes les secondes
+jusqu'à ce qu'on l'arrête
+
+$ :(){ :;}
+-> la fonction récursive qui fait tout péter, ici ":" est le nom de la fonction
+-> pas drôle le système arrête la console avant que ça pète...
+
+================================================================================
+
+$ for i in `seq 255`; do printf "$i\t:0x%x\t:" $i && echo $i | awk '{printf "%c", $i}' && printf ":\n"; done
+-> pour afficher le caractère correspondant au code ascii
+
+================================================================================
+
+$ gcc -shared -fPIC pg.o -o libpg.so
+-> permet de créer une lib dynamique
+
+$ ar ruv libpg.a pg.o
+-> permet de créer une lib statique
+
+-> ensuite
+$ gcc -o main main.c -lpg -L.
+
+================================================================================
+
+$ gcc -Q -Wextra --help=warning
+-> pour voir les options de warnings activées
+$ gcc -Q -O --help=optimizers
+-> pour voir les options d'optimisation activées
+
+================================================================================
+
+$ man netstat
+-> pour connaître plein de fichiers intéressant à regarder
+(dont /etc/services ou /proc/net/route)
+
+$ route
+-> pour connaître la table de routage IP du noyau
+
+================================================================================
+
+$ alsamixer
+-> pour avoir des info sur la carte son
+
+$ uname -r
+-> pour avoir des info sur la version du système
+
+================================================================================
+
+$ cron
+-> pour effectuer des tâches à intervalle de temps régulier
+
+$ at
+-> pour effectuer des tâches à un certain moment
+
+================================================================================
+
+$ lpq -Pzeus
+-> pour voir la file d'attente de l'imprimante zeus
+
+$ lpr -Pzeus file
+-> pour imprimer le fichier file avec l'imprimante zeus
+
+$ lprm -Pzeus no_job
+-> pour supprimer un fichier de la file d'impression
+
+================================================================================
+
+$ wc [option]
+-> pour connaître le nombre de ligne, de caractères, etc. d'un fichier
+
+================================================================================
+
+$ VBoxManage internalcommands listpartitions -rawdisk /dev/sda
+-> pour connaître la liste des partitions avec leur numéro associé
+
+$ fdisk -l /dev/sda
+-> pour avoir des info sur les partitions
+
+================================================================================
+
+$ \time -v ps
+-> la vraie commande time
+$ time ps
+-> juste un alias, moins d'informations
+
+$ pstree
+-> pour voir les processus sous forme d'arbre
+
+$ renice
+-> pour changer la priorité d'un processus
+
+$ ulimit -a
+-> pour avoir certaines info systèmes comme la taille max de la stack,
+des core file, etc.
+
+================================================================================
+
+$ getfacl <file>
+-> permet de connaître les droits d'un fichier
+$ setfacl -m user:login2:rw <file>
+-> pour donner à l'utilisateur login2 le droit de lecture et écriture sur le
+fichier
+
+================================================================================
+
+$ set
+-> liste les variables d'environnement et pas seulement
+
+================================================================================
+
+Édition de la ligne de commande
+Ctrl-P	Ctrl-N	Ctrl-A	Ctrl-E	Ctrl-B Ctrl-F Ctrl-D
+Ctrl-U	Ctrl-K  Alt-F	Alt-B	Ctrl-W Alt-D  Alt-<delete>
+
+================================================================================
+
+$ jobs
+-> liste les processus stoppés (avec Ctrl-Z)
+
+================================================================================
+
+$ ls | tee log.txt
+-> tee écrit à la fois sur la sortie standard et dans un fichier 
+
+================================================================================
+
+$ iconv -f iso-8859-1 -t utf-8 file -o file
+-> Change l'encodage du fichier file de iso-8859-1 à UTF-8
+
+================================================================================
+
+$ gdbtui
+ou
+$ gdb -tui
+-> gdb avec interface ncurses
+
+================================================================================
+
+$ pidof <programme>
+-> pour connaître  le pid d'un programme en cours d'exécution
+
+================================================================================
+
+gdb:
+-> disas
+ex: disas main
+desable le code d'une fonction, par exemple
+-> info frame
+-> set
+permet de modifier une valeur à une adresse
+
+================================================================================
+
+$ mogrify -rotate 90 *
+-> permet d'appliquer une rotation de 90 degrés à toutes les images d'un
+répertoire 
+$ mogrify -resize 50% *.JPG
+
+================================================================================
+
+$ apt-cache policy <nom-du-paquet>
+-> affiche la version installée du paquet et la dernière version du dépôt
+
+================================================================================
+
+$ telnet towel.blinkenlights.nl
+-> star wars movie
+
+================================================================================
+
+$ cat <&0
+$ cat <&0 > toto.txt
+-> équivalent à 
+$ cat
+$ cat > toto.txt
+
+================================================================================
+$ man modprobe
+-> add and remove modules to the Linux Kernel
+$ lsmod
+-> status of modules in the Linux Kernel
+
+$ chkconfig
+-> enable or disable system services
+
+$ man service
+-> run a System V init script
+ex:
+	$ service network-manager stop/start
+also:
+	$ /etc/init.d/network-manager stop/start/status
+also
+	$ start/stop/status network-manager
+
+===============================================================================
+
+See ~/ENSEIRB-MATMECA/SecInfo/aircrack-ng/ for some other tips
+
+===============================================================================
+
+$ ettercap
+-> man in the middle attacks
+
+===============================================================================
+
+$!<string>
+-> execute last cmd in history starting with <string>
+
+===============================================================================
+
+$ find . ! -name '*.cpp' ! -name '*.hpp' -delete
+-> tout effacer dans un dossier sauf les .cpp et les .hpp
+
+===============================================================================
+
+$ nl
+-> affiche le contenu d'un fichier avec des numéros de ligne
+
+===============================================================================
+
+for file in `ls /usr/share/cowsay/cows/`; do 
+  clear; fortune -s | cowsay -f /usr/share/cowsay/cows/$file; cat
+done
+
+===============================================================================
+
+$ setxkbmap us
+-> set us keyboard
+
+===============================================================================
+
+$ lstopo
+-> affiche l'archi proc
+
+===============================================================================
+
+$ readlink -f <file>
+-> print file full path
+
+===============================================================================
+
+$ free
+-> affiche des stats sur la mémoire
+
+===============================================================================
+
+PGP usage:
+$ pgp -kg
+-> Key Generate
+$ pgp -kc
+-> Key Check
+$ pgp -ka <public key file>
+-> Key add
+$ pgp -kxa mon_nom <output file>
+-> Key eXtract to Ascii
+$ pgp -sea MESSAGE.txt nom_destinataire
+-> Sign, Encrypt and convert to Ascii
+$ pgp MESSAGE.ASC
+-> décrypte le fichier MESSAGE.ASC
+
+===============================================================================
+
+$ setarch `uname -m` -R /bin/bash
+
+===============================================================================
+
+$ pushd
+-> cd into a directory and keep a stack of previous directories
+$ popd
+-> cd into the previous directory of the stack and remove it from the stack
+
+===============================================================================
+
+$ dirname
+$ basename
+
+===============================================================================
+
+$ xargs
+ex:
+    $ readlink -f <file> | xargs dirname
+	instead of
+    $ dirname `readlink -f <file>`
+	
+===============================================================================
+
+$ cat /proc/cpuinfo
+
+===============================================================================
+
+$ umask 077
+-> les fichiers crees sont par default en rw-------
+(par default 022
+
+================================================================================
+
+$ lsblk
+-> tree of partitions
+
+================================================================================
+
+$ stat /dev/urandom
+
+================================================================================
+
+$ git add --patch
+$ git add --interactive
