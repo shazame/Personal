@@ -167,3 +167,16 @@ dans le vimrc :
 
 gj and gk
 -> navigation in a long line
+
+==============================================================================
+====================   Surpuissant pour la compilation   =====================
+==============================================================================
+
+# Tout d'abord il faut faire
+:make
+# Ensuite la liste des erreurs peut être affichée avec
+:cl
+# Il est possible de naviguer dans le fichier sur les erreurs avec
+:cN et :cn
+# Un truc trop puissant qui permet de naviguer facilement entre les erreurs
+:cope

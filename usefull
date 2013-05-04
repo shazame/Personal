@@ -506,3 +506,8 @@ $ stat /dev/urandom
 
 $ git add --patch
 $ git add --interactive
+
+================================================================================
+
+$ htop
+-> mieux que top
