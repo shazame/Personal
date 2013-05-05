@@ -511,3 +511,30 @@ $ git add --interactive
 
 $ htop
 -> mieux que top
+
+================================================================================
+
+Utilisation de ssh :
+$ git clone ssh://192.168.0.11/home/fabien/work/code/aversive.b_eirbot/projects/coupe2013/2A
+
+Utilisation de git daemon:
+# D'abord on utilise un dossier pour réunir les projets git dans un dossier
+# commit
+$ cd && mkdir gitroot
+# On créé un lien symbolique vers le projet:
+$ ln -s /path/to/project/.git ~/gitroot/eirbot-2013.git
+# On lance git daemon en tache de fond
+$ git daemon --reuseaddr --base-path=~/gitroot ~/gitroot/eirbot-2013.git &
+# On autorise le repo a être lu par git daemon
+$ touch /path/to/project/.git/git-daemon-export-ok
+
+# Maintenant on peut voir le repo depuis l'extérieur
+$ git ls-remote git://192.168.0.181/eirbot-2013.git
+# Cela devrait afficher quelque chose comme :
+	f95e212457062cbc153695eccf22d53640e494feHEAD
+	f95e212457062cbc153695eccf22d53640e494ferefs/heads/master
+# Si c'est bien le cas alors on peut ajouter le repo distant en remote
+$ git remote add david git://192.168.0.181/eirbot-2013.git/
+# Il est maintenant possible fetch, co ou pull depuis le repo distant
+$ git fetch david
+$ git co david/master -- <fichier>
