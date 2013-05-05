@@ -1,5 +1,4 @@
 J -> supprimer saut de ligne
-K -> rechercher le mot/la selection dans le man
 
 H -> positionner curseur en haut du buffer
 M -> positionner curseur au milieu du buffer
@@ -13,6 +12,8 @@ ga -> code ascii du caractère
 <c-y> -> insert from above
 
 `` -> remettre le curseur à la position du dernier saut
+
+<C-o> -> remonte dans l'historique des positions du curseur
 
 gqq -> formatter le texte pour ne pas dépasser les 78 caractères sur une ligne
 
@@ -52,25 +53,6 @@ Ou entrer $vimdiff file1 file2 dans un shell
 
 :r <file>
 -> ajoute le contenu du fichier <file> au fichier en cours d'édition
-
-:r!ls
--> permet d'insérer le résultat d'une commande dans un fichier
-
-!w puis ls
-ou
-!! puis <cmd>
--> permet de remplacer la ligne courante par le résultat d'une commande
-
-:%!<cmd>
--> applique une commande au fichier
-
-:%!sort
--> trie un fichier
-
-:%!grep -E '^0|\<int\>'
--> sélectionne les lignes d'un fichier commençant par un 0 ou contenant le mot 'int'
-Autre solution avec g :
-:g/^0|\<int\>/
 
 :tjump nom_fonction
 -> pour aller sur la déclaration d'un identifiant
@@ -169,6 +151,56 @@ gj and gk
 -> navigation in a long line
 
 ==============================================================================
+=========================   Commandes du terminal   ==========================
+==============================================================================
+
+# Lancer un shell
+:sh
+
+# Lancer une commande shell
+:! ls
+# Lancer un commande shell sans quitter la fenêtre vim
+:w !ls
+
+# Insérer le résultat d'une commande dans un fichier
+:r!ls
+
+# Remplacer la ligne courante par le résultat d'une commande
+!w puis ls
+# ou
+!! puis <cmd>
+
+# Appliquer une commande au fichier
+:%!<cmd>
+# Exemple : trier le fichier
+:%!sort
+
+# Sélectionner les lignes d'un fichier commençant par un 0 ou contenant le mot 'int'
+:%!grep -E '^0|\<int\>'
+# Autre solution avec g :
+:g/^0|\<int\>/
+
+# Exemple : compter les mots (autre solution que g<C-g>)
+:w !wc -w
+
+# Executer une commande shell à partir d'une selection vim
+# selectionner puis tapper :
+:w !bash
+# ligne de test :
+echo toto
+# Utilisation pratique :
+#  - faire un :r!ls d'un repertoire dont on veut renommer tous les fichiers
+#  - éditer les lignes de façon à avoir l'équivalent d'un script shell
+#  - sélectionner et envoyer les commandes au shell
+
+mv klwekl  test_klwekl;
+mv otor    test_otor;
+mv wkjf    test_wkjf;
+mv lkjlfew test_lkjlfew;
+mv wlkjl   test_wlkjl;
+mv titi    test_titi;
+
+==============================================================================
 ====================   Surpuissant pour la compilation   =====================
 ==============================================================================
 
@@ -180,3 +212,118 @@ gj and gk
 :cN et :cn
 # Un truc trop puissant qui permet de naviguer facilement entre les erreurs
 :cope
+
+
+==============================================================================
+===============================   Registres   ================================
+==============================================================================
+
+:reg
+
+# En mode insertion :
+<C-r><nom_du_registre>
+# insère le contenu du registre
+# ex :
+# insérer le nom du fichier
+<C-r>%				
+# insérer la dernière commande tapée
+<C-r>%				
+# printer le résultat du calcul
+<C-r>= <entrer une opération>
+# fonctionne aussi avec les opérations de base : 
+# cos, sin, tan, exp, log, sqrt, pow, ...
+<C-r>=cos(32.4)*cos(32.4)+sin(32.4)*sin(32.4)
+# -> 1.0
+
+# Utilisation avancée 
+# Copier la ligne suivante
+cos(32.4)*cos(32.4)+sin(32.4)*sin(32.4)
+# Et faire :
+i<C-r>=<C-r>"<Enter>
+
+
+================================================================================
+=============================  Jouer avec le man  ==============================
+================================================================================
+
+K -> rechercher le mot/la selection dans le man
+
+:runtime ftplugin/man.vim
+# puis
+:Man <commande>
+# ouvre un man en couleur de la commande
+# Possibilité de naviguer entre pages de man avec <C-]> et de revenir en
+# arrière dans les pages de man avec <C-T>
+
+
+================================================================================
+============================   Jouer avec les tab   ============================
+================================================================================
+
+# Ouvrir la fenêtre courante dans une nouvelle tab
+# Pratique pour avoir l'équivalent d'un <C-w>o et garder les split courants
+:tab sp
+
+# Ouvrir l'aide dans une nouvelle tab
+:tab help gt
+
+# Ouvrir l'aide dans un buffer vertical
+:vert help Man
+
+
+================================================================================
+============================   Jouer avec les tag   ============================
+================================================================================
+
+# Plein d'infos sympa dans :
+:help window-tag
+
+
+================================================================================
+==============================   The power of g   ==============================
+================================================================================
+
+# Afficher des informations sur un fichier (nombre de mots, lignes, etc.)
+# Possible de faire une sélection [verticale] avant pour application a la sélection
+g<C-g>
+
+# Endormir vim pendant N secondes (:help sleep) :
+[N]gs
+
+
+================================================================================
+=============================   Paterns spéciaux   =============================
+================================================================================
+
+# /\%c and /\%v matches a specific column of virtual column
+# :help \%
+# exemple : match n'importe quoi sur la 20e colonne
+/\%20c.
+# exemple : sur les lignes suivantes, cette commande va aligner la deuxième
+# colonne sur la 40 colonne de caractères
+'<,'>s/\%40v\s*//
+
+lwkjef                                 wefklj
+welfkjwefjlfewk                        wefjklewf
+weflkjwlef                             wfkjwelkf
+wlfkjwlkef                             weflkjwef
+jwelklwkf                              llkjflwewklefjl
+wjklelkfwj                             wekfjew
+wejkfwlkfe                             wflkklwejfwjfk
+ejkwefwk                               wefkljwlek
+wlejfwlekjflkwejflwkjflew              wekfljwel
+
+
+================================================================================
+===========================   Déplacement de ligne   ===========================
+================================================================================
+
+:m <address>
+# Déplacer la ligne à la première ligne :
+:m0
+# Déplacer la ligne à la dernière ligne :
+:m$
+# Déplacer la ligne vers le bas :
+:m+1
+# Déplacer la ligne vers le haut :
+:m-2
