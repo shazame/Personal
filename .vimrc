@@ -81,8 +81,18 @@
 	endif
 " }
 
-" Line number
-set number
+" Valuable {
+	" Line number
+	set number
+
+	set wildmode=list:longest
+	syn on
+	" Limit text width
+	set textwidth=78
+
+	" Activate :Man <name>
+	runtime ftplugin/man.vim
+" }
 
 " formatting {
 	set tabstop=4
@@ -94,15 +104,12 @@ set number
 	"set expandtab
 " }
 
-set wildmode=list:longest
-syn on
-" Limit text width
-set textwidth=78
-
-" Fold text
-set foldmethod=indent
-set nofoldenable
-"nnoremap <space> za
+" folding {
+	" Fold text
+	set foldmethod=indent
+	set nofoldenable
+	"nnoremap <space> za
+"}
 
 " Key Mapping {
 	" Use <F5> to indent all the file
