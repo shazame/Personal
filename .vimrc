@@ -202,10 +202,15 @@
 	" }
 
 	" AutoComplPop {
+		" Disable it by default 'cause it's really annoying
+		let g:acp_enableAtStartup = 0
 	" }
 
 	" slimv {
 		let g:lisp_rainbow=1
+	" }
+
+	" fugitive {
 	" }
 
 " }
