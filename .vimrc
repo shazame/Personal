@@ -211,6 +211,8 @@
 	" }
 
 	" fugitive {
+		" Display filename and branch in the status bar
+		set statusline=%f%50{fugitive#statusline()}
 	" }
 
 " }
