@@ -212,7 +212,8 @@
 
 	" fugitive {
 		" Display filename and branch in the status bar
-		set statusline=%f%50{fugitive#statusline()}
+		" set statusline=%f%50{fugitive#statusline()}
+		set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 	" }
 
 " }
