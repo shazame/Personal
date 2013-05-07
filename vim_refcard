@@ -201,18 +201,30 @@ mv wlkjl   test_wlkjl;
 mv titi    test_titi;
 
 ==============================================================================
-====================   Surpuissant pour la compilation   =====================
+=======================   Utilisation des quicklist   ========================
 ==============================================================================
 
-# Tout d'abord il faut faire
-:make
-# Ensuite la liste des erreurs peut être affichée avec
+# Lorsqu'une quicklist a été créée il est possible de l'afficher
 :cl
-# Il est possible de naviguer dans le fichier sur les erreurs avec
+# Il est possible de passer d'une ligne de la quicklist a une autre
 :cN et :cn
-# Un truc trop puissant qui permet de naviguer facilement entre les erreurs
+# Il est possible de passer à la prochaine ligne mais en sautant au prochain
+# fichier
+:cNf et :cnf
+# Un truc trop puissant qui permet de naviguer facilement dans la quicklist
 :cope
 
+          ==========   Surpuissant pour la compilation   ===========
+
+# La quicklist peut-être utilisée après un :make pour naviguer entre les erreurs
+:make
+
+      ==========   Surpuissant pour la recherche de patterns   ===========
+
+# Utilisation après un :vim pour naviguer entre les résultats de la recherche
+# ex : recherche d'un pattern récursivement dans tous les fichiers .c et .h du
+# dossier courant et tous les sous-dossiers
+:vim /trajectory_goto_*/ **/*.[ch]
 
 ==============================================================================
 ===============================   Registres   ================================
