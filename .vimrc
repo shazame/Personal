@@ -121,6 +121,10 @@
 	" Jump to the tag corresponding to what is under the cursor
 	noremap <F7> <C-]>
 
+	" Allow using ctrl up/down arrow to move a line up or down
+	noremap <C-Up> :m-2 <CR>
+	noremap <C-Down> :m+1 <CR>
+
 	" Switch between .c and .h files or between .cpp and .hpp files {
 		function! SwitchCH()
 			if expand('%:e')=='c'
