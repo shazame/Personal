@@ -538,3 +538,26 @@ $ git remote add david git://192.168.0.181/eirbot-2013.git/
 # Il est maintenant possible fetch, co ou pull depuis le repo distant
 $ git fetch david
 $ git co david/master -- <fichier>
+
+================================================================================
+
+========================= PGP ==========================
+
+# Generate private key
+$ gpg --gen-key
+# Generate ASCII version of public key
+$ gpg --armor --output public.key --export 'Your Name'
+# List keys in public and secrete key ring
+$ gpg --list-keys
+$ gpg --list-secret-keys
+
+# Usage:
+
+# Encrypt a file with private key
+$ gpg -e -r David <secret.tar>
+
+# Encrypt a file with a password
+$ gpg -c <secret.tar>
+
+# Decrypt a file data
+$ gpg -d <secret.tar.pgp>

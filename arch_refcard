@@ -195,8 +195,14 @@ $ wifi-menu
          ============================================================ 
 
 # man nmcli
+$ systemctl enable NetworkManager
 $ systemctl start NetworkManager
+
+# Solution 1: shell
 $ nmcli dev wifi connect <BSSID> password <password> iface wlp2s0
+
+# Solution 2: graphic
+$ nm-applet 
 
 ================================================================================
 ================================== X server ====================================
@@ -259,3 +265,7 @@ $ speaker-test -c2 -l1
 $ vim /etc/X11/xorg.conf.d/50-synaptics.conf
 $ synclient
 
+======================== Thunar ========================
+
+# Launch file manager as a daemon
+$ thunar --daemon
