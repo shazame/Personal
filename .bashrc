@@ -55,3 +55,7 @@ source /usr/share/doc/pkgfile/command-not-found.bash
 export MANPATH=$MANPATH:/usr/local/texlvie/2012/texmf/doc/man
 export INFOPATH=$INFOPATH:/usr/local/texlvie/2012/texmf/doc/info
 export PATH=/usr/local/texlive/2012/bin/x86_64-linux:$PATH
+
+# Disable the effect of /etc/profile.d/openssh-askpass.sh
+# that pops up a qt4 windows for asking ssh passphrase
+export SSH_ASKPASS=
