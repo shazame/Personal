@@ -269,3 +269,10 @@ $ synclient
 
 # Launch file manager as a daemon
 $ thunar --daemon
+
+======================== Ranger ========================
+
+# Combination with sxiv to browse files
+$ ranger
+# Or
+$ rifle_sxiv PICTURES
