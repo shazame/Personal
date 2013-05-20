@@ -276,3 +276,23 @@ $ thunar --daemon
 $ ranger
 # Or
 $ rifle_sxiv PICTURES
+
+======================= Printing =======================
+
+# Printer name can me found with
+$ smbtree
+# or 
+$ smbclient -L <address>
+
+# Using CUPS
+
+# Run CUPS daemon
+$ cupsd
+
+# Open a browser and go to: http://localhost:631
+# Printers can be added and configured
+
+# Now it is possible to view printer queue and print
+# see https://wiki.archlinux.org/index.php/CUPS#Command-line_configuration
+$ lpq -P <printer_name>
+$ lpr -P <printer_name> <file>

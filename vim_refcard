@@ -339,3 +339,16 @@ wlejfwlekjflkwejflwkjflew              wekfljwel
 :m+1
 # Déplacer la ligne vers le haut :
 :m-2
+
+
+================================================================================
+===============================  File encryption ===============================
+================================================================================
+
+:X
+# You are prompt to enter a key
+# Type it, save the file
+:x
+# Now the file is encrypted
+# each time you will open the file with vim, you will be asked for the key
+# No other editor can be used to open it
