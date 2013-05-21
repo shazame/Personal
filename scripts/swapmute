@@ -1,0 +1,7 @@
+#! /bin/sh
+
+amixer get Master | grep -q "\[on\]"  && amixer set Master mute
+
+if [ $? -ne 0 ]; then
+amixer get Master | grep -q "\[off\]" && amixer set Master unmute
+fi
