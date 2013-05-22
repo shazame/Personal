@@ -323,9 +323,13 @@ globalkeys = awful.util.table.join(
 	-- bind PrintScrn to capture a screen
 	awful.key({}, "Print", function() awful.util.spawn("capscr") end),
 
-	-- Backlight
+	-- Screen Backlight
 	awful.key({ modkey }, "F5", function() awful.util.spawn("backlightset down") end),
 	awful.key({ modkey }, "F6", function() awful.util.spawn("backlightset up") end),
+
+	-- Keyboard Backlight
+	awful.key({ modkey }, "F3", function() awful.util.spawn("kbdbacklight down") end),
+	awful.key({ modkey }, "F4", function() awful.util.spawn("kbdbacklight up") end),
 
 	-- Sound
 	awful.key({ modkey }, "F10", function() awful.util.spawn("swapmute") end),
