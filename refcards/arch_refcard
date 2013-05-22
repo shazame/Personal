@@ -54,6 +54,32 @@ $ systemctl enable <servicename>.service
 $ systemctl start <servicename>.service
 $ systemctl stop <servicename>.service
 
+# Services can be used to have script launch a start up
+# Let's say the script we want is /usr/local/bin/myscript.sh
+# Now we create the service file in /usr/lib/systemd/system/
+
+########## myscript.service ##########
+[Unit]
+Description=My script description
+After=systemd-udevd.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/myscript start
+ExecStop=/usr/local/bin/myscript stop
+
+[Install]
+WantedBy=multi-user.target
+####### end of myscript.service ######
+
+# Now reaload systemd manager configuration
+$ systemctl daemon-reload
+# The service can be started
+$ systemctl start myscript.service
+# And even enabled, so that our script is launched at start up
+$ systemctl enable myscript.service
+
 ================================================================================
 ============================== NETWORK MANAGEMENT ==============================
 ================================================================================
