@@ -332,6 +332,9 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey }, "F11", function() awful.util.spawn("amixer set Master unmute 1%-") end),
 	awful.key({ modkey }, "F12", function() awful.util.spawn("amixer set Master unmute 1%+") end),
 
+	-- Pad
+	awful.key({ modkey }, "F9", function() awful.util.spawn("swappad") end),
+
 	-- Sreensaver
 	awful.key({ modkey, "Control"}, "l", function() awful.util.spawn("xscreensaver-command -lock") end)
 )
