@@ -193,12 +193,12 @@ mytasklist.buttons = awful.util.table.join(
  -- Initialize widget
  batwidget = wibox.widget.textbox()
  -- Register widget
- vicious.register(batwidget, vicious.widgets.bat, "$2% $3", 60, "BAT0")
+ vicious.register(batwidget, vicious.widgets.bat, "<span color=\"#00FF88\">$2% $3</span>", 60, "BAT0")
 
  -- Initialize widget
  volwidget = wibox.widget.textbox()
  -- Register widget
- vicious.register(volwidget, vicious.widgets.volume, "$1 $2", 2, "Master")
+ vicious.register(volwidget, vicious.widgets.volume, "<span color=\"orange\">$1 $2</span>", 2, "Master")
  
  -- END OF WIDGET ADDITION
 
