@@ -10,7 +10,10 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+
 local vicious = require("vicious")
+-- Personal library
+local davidus = require("davidus")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -200,6 +203,8 @@ mytasklist.buttons = awful.util.table.join(
  -- Register widget
  vicious.register(volwidget, vicious.widgets.volume, "<span color=\"orange\">$1 $2</span>", 2, "Master")
  
+ langwidget = wibox.widget.textbox(" <b>us</b>  ")
+
  -- END OF WIDGET ADDITION
 
 for s = 1, screen.count() do
@@ -231,6 +236,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(langwidget)
     right_layout:add(volwidget)
     right_layout:add(cpuwidget)
     right_layout:add(batwidget)
@@ -384,7 +390,10 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey }, "F9", function() awful.util.spawn("swappad") end),
 
 	-- Sreensaver
-	awful.key({ modkey, "Control"}, "l", function() awful.util.spawn("xscreensaver-command -lock") end)
+	awful.key({ modkey, "Control"}, "l", function() awful.util.spawn("xscreensaver-command -lock") end),
+
+	-- Change keyboard mapping
+	awful.key({ modkey, "Control"}, "k", function() davidus.kbdmap_swap(langwidget, awful.util.spawn) end)
 )
 
 clientkeys = awful.util.table.join(
