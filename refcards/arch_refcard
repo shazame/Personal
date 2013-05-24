@@ -272,6 +272,9 @@ current_theme   archlinux-darch-white
 $ slim -p /usr/share/slim/themes/<theme name>
 # To close type "exit" in the Login line and press Enter
 
+=================== X events ===================
+
+$ xev
 
 ================================================================================
 ================================ MISCELLANEOUS =================================
