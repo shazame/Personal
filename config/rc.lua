@@ -15,6 +15,8 @@ local vicious = require("vicious")
 -- Personal library
 local davidus = require("davidus")
 
+davidus.init(awful.util.spawn)
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -202,6 +204,8 @@ mytasklist.buttons = awful.util.table.join(
  volwidget = wibox.widget.textbox()
  -- Register widget
  vicious.register(volwidget, vicious.widgets.volume, "<span color=\"orange\">$1 $2</span>", 2, "Master")
+
+ davidus.sound_init(vicious.force, volwidget)
  
  langwidget = wibox.widget.textbox(" <b>us</b>  ")
 
@@ -382,9 +386,9 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey }, "F4", function() awful.util.spawn("kbdbacklight up") end),
 
 	-- Sound
-	awful.key({ modkey }, "F10", function() awful.util.spawn("swapmute") end),
-	awful.key({ modkey }, "F11", function() awful.util.spawn("amixer set Master unmute 1%-") end),
-	awful.key({ modkey }, "F12", function() awful.util.spawn("amixer set Master unmute 1%+") end),
+	awful.key({ modkey }, "F10", function() davidus.sound_mute() end),
+	awful.key({ modkey }, "F11", function() davidus.sound_down() end),
+	awful.key({ modkey }, "F12", function() davidus.sound_up() end),
 
 	-- Pad
 	awful.key({ modkey }, "F9", function() awful.util.spawn("swappad") end),
@@ -393,7 +397,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, "Control"}, "l", function() awful.util.spawn("xscreensaver-command -lock") end),
 
 	-- Change keyboard mapping
-	awful.key({ modkey, "Control"}, "k", function() davidus.kbdmap_swap(langwidget, awful.util.spawn) end)
+	awful.key({ modkey, "Control"}, "k", function() davidus.kbdmap_swap(langwidget) end)
 )
 
 clientkeys = awful.util.table.join(
