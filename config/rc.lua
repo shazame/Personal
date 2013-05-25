@@ -529,10 +529,10 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey }, "F9", function() awful.util.spawn("swappad") end),
 
 	-- Sreensaver
-	awful.key({ "Control"}, "l", function() awful.util.spawn("xscreensaver-command -lock") end),
+	awful.key({ "Mod1", "Control"}, "l", function() awful.util.spawn("xscreensaver-command -lock") end),
 
 	-- Change keyboard mapping
-	awful.key({ "Control"}, "k", function() davidus.kbdmap_swap(langwidget) end),
+	awful.key({ "Mod1", "Control"}, "k", function() davidus.kbdmap_swap(langwidget) end),
 
 	-- Cycling through possible multiple screen configuration
 	awful.key({ modkey }, "F8", xrandr)
