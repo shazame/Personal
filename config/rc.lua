@@ -170,7 +170,7 @@ mytasklist.buttons = awful.util.table.join(
 
  -- START OF WIDGET ADDITION
  
- -- Initialize widget
+ -- Memory
  memwidget = awful.widget.progressbar()
  -- Progressbar properties
  memwidget:set_width(8)
@@ -184,7 +184,7 @@ mytasklist.buttons = awful.util.table.join(
  vicious.register(memwidget, vicious.widgets.mem, "$1", 13)
  
  
- -- Initialize widget
+ -- CPU
  cpuwidget = awful.widget.graph()
  -- Graph properties
  cpuwidget:set_width(50)
@@ -195,19 +195,32 @@ mytasklist.buttons = awful.util.table.join(
  vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
 
 
- -- Initialize widget
+ -- Battery
  batwidget = wibox.widget.textbox()
  -- Register widget
  vicious.register(batwidget, vicious.widgets.bat, "<span color=\"#00FF88\">$2% $3</span>", 60, "BAT0")
 
- -- Initialize widget
+ -- Volume
  volwidget = wibox.widget.textbox()
  -- Register widget
  vicious.register(volwidget, vicious.widgets.volume, "<span color=\"orange\">$1 $2</span>", 2, "Master")
 
  davidus.sound_init(vicious.force, volwidget)
  
+ -- Language
  langwidget = wibox.widget.textbox(" <b>us</b>  ")
+
+ -- mpd
+ mpdwidget = wibox.widget.textbox()
+ -- Register widget
+ vicious.register(mpdwidget, vicious.widgets.mpd,
+    function (mpdwidget, args)
+        if args["{state}"] == "Stop" then 
+            return "<span color=\"orange\"> - </span> "
+        else 
+            return "<span color=\"orange\">" .. args["{Artist}"]..' - '.. args["{Title}"] .. "</span> "
+        end
+    end, 10)
 
  -- END OF WIDGET ADDITION
 
@@ -241,6 +254,7 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(langwidget)
+    right_layout:add(mpdwidget)
     right_layout:add(volwidget)
     right_layout:add(cpuwidget)
     right_layout:add(batwidget)
