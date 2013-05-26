@@ -573,3 +573,8 @@ $ nmap -sS <address>
 
 # Finding maximum informations
 $ nmap -v -A <address>
+
+======================== iotop =========================
+
+# Display I/O usage by processes
+$ iotop -oa
