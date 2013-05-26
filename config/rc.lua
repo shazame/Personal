@@ -569,6 +569,18 @@ clientkeys = awful.util.table.join(
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
+        end),
+    awful.key({ "Mod1", "Control" }, "j",
+        function (c)
+			if c.opacity < 1 then
+				c.opacity = c.opacity + 0.1
+			end
+        end),
+    awful.key({ "Mod1", "Control" }, "h",
+        function (c)
+			if c.opacity > 0 then
+				c.opacity = c.opacity - 0.1
+			end
         end)
 )
 
