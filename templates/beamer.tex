@@ -1,0 +1,108 @@
+\documentclass{beamer}
+\usepackage[latin1]{inputenc}
+\usepackage{colortbl}
+\usetheme{Warsaw}
+\title[ShortTitle(bottompage)]{Title\\Subtitle}
+\author{David Bitonneau}
+\institute{Institute}
+\date{Month XX, 20XX}
+
+%% Uncomment to display the layout before each new section
+%\AtBeginSubsection[]
+%{
+%  \begin{frame}<beamer>
+%    \frametitle{Layout}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
+
+% Useful to have frame without headline, like the Table of contents
+\makeatletter
+    \newenvironment{withoutheadline}{
+        \setbeamertemplate{headline}[default]
+        \def\beamer@entrycode{\vspace*{-\headheight}}
+    }{}
+\makeatother
+
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{withoutheadline}
+    \begin{frame}{Table of contents}
+        \tableofcontents
+    \end{frame}
+\end{withoutheadline}
+
+\section{Introduction}
+\begin{frame}{Introduction}
+	...
+\end{frame}
+
+\section{Basic examples}
+\subsection{Empty frame}
+\begin{frame}
+\end{frame}
+
+\subsection{Just a title}
+\begin{frame}{Title}
+\end{frame}
+
+\section{Intermediate examples}
+\subsection{Lists}
+\begin{frame}{Lists} 
+	\begin{itemize}
+		\item Item1
+		\item Item2
+		\item Item3
+		\item Item4
+	\end{itemize}
+\end{frame}
+
+\subsection{Blocks}
+\begin{frame}{Blocks} 
+	\begin{block}{A block}
+		The content of the block.
+	\end{block}
+\end{frame}
+
+\section{Animations}
+\subsection{Simple animation with lists}
+\begin{frame}{Simple animation with lists}
+	\begin{itemize}
+		\pause \item Item1
+		\pause \item Item2
+		\pause \item Item3
+		\pause \item Item4
+	\end{itemize}
+\end{frame}
+
+\subsection{Another way to make animation with list}
+\begin{frame}{Another way to make animation with list}
+	\begin{itemize}[<+->]
+		\item L
+		\item A
+		\item T
+		\item E
+		\item X
+	\end{itemize}
+\end{frame}
+
+\subsection{And with some color}
+\begin{frame}{And with some color}
+	\begin{itemize}
+		\item <+-| alert@+> Robert De Niro
+		\item <+-| alert@+> Brian De Palma
+		\item <+-| alert@+> Gerard Depardieu
+		\item <+-| alert@+> Tux
+	\end{itemize}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}{Conclusion}
+	...
+\end{frame}
+
+\end{document}
