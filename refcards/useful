@@ -118,7 +118,7 @@ $ strace
 $ strings
 $ nm
 
-->utile pour le hack
+-> useful for hacking
 
 ================================================================================
 
