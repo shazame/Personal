@@ -1,0 +1,67 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage{geometry}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{hyperref}
+
+\geometry{margin=2cm}
+
+\usepackage{fancyhdr}
+\usepackage{fancyvrb} 
+\usepackage{graphicx}
+\usepackage{float}
+%\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{pdfpages}
+
+\pagestyle{fancy}
+\rhead{Title}
+\renewcommand{\footrulewidth}{0.5pt}
+
+
+\begin{document}
+
+\begin{titlepage}
+	\textsc{\Large Name \hfill Institution}\\[0.5cm]
+  \begin{center}
+    \textsc{\Large Report}\\[2cm]
+	\textsc{\Huge Title}\\[1cm]
+    %\includegraphics[width=7cm]{institution_logo.jpg}\\[1cm]
+    \textsc{\Large Supervisor: Name}\\[1.0cm]
+    %\includegraphics[width=8cm]{host_logo.png}\\[1cm]
+    \textsc{\Large Date}\\
+
+\end{center}
+
+\end{titlepage}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+\section{Introduction}
+%\input{sections/Introduction}
+\clearpage
+
+\section{State of the Art}
+%\input{StateOfArt}
+\clearpage
+
+\section{Concept Design}
+%\input{sections/Implementation}
+
+\section{Implementation}
+%\input{sections/Implementation}
+
+%\clearpage
+\section{Conclusion}
+%\input{sections/Conclusion}
+
+\clearpage
+\section{Annexes}
+
+\end{document}
