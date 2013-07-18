@@ -578,3 +578,12 @@ $ nmap -v -A <address>
 
 # Display I/O usage by processes
 $ iotop -oa
+
+======================== split =========================
+
+# Split a file into different files
+
+# Put each line of the file in different files
+$ split -1 toto.txt
+# Put each couple of lines in different files
+$ split -2 toto.txt
