@@ -26,36 +26,19 @@ else
 	PS1='($(batlev)%) \u@\h \W\$ '
 fi
 
-export EDITOR=vim
-
-# some aliases
-alias ls='ls --color=auto'
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias rm='rm -i'
-alias za='zathura'
-alias go='cd ~/Eirbot/aversive.b_eirbot/projects/coupe2013/2A/'
-alias gopro='cd ~/ENSEIRB-MATMECA/S8/Project/'
-
-proxy() {
-		export http_proxy='http://147.210.183.243:3128'
-		export https_proxy='https://147.210.183.243:3128'
-}
-
-mkcd() {
-	mkdir $1 && cd $1
-}
-
 # Automatically search the official repositories 
 # when an unrecognized command is entered
 source /usr/share/doc/pkgfile/command-not-found.bash
 
-# For texlive
-export MANPATH=$MANPATH:/usr/local/texlvie/2012/texmf/doc/man
-export INFOPATH=$INFOPATH:/usr/local/texlvie/2012/texmf/doc/info
-export PATH=/usr/local/texlive/2012/bin/x86_64-linux:$PATH
+if [ -f ~/.bash_aliases ]; then
+	. ~/.bash_aliases
+fi
 
-# Disable the effect of /etc/profile.d/openssh-askpass.sh
-# that pops up a qt4 windows for asking ssh passphrase
-export SSH_ASKPASS=
+if [ -f ~/.bash_functions ]; then
+	. ~/.bash_functions
+fi
+
+if [ -f ~/.bash_export ]; then
+	. ~/.bash_export
+fi
+
