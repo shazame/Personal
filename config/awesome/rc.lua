@@ -194,11 +194,10 @@ mytasklist.buttons = awful.util.table.join(
  -- Register widget
  vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
 
-
  -- Battery
  batwidget = wibox.widget.textbox()
  -- Register widget
- vicious.register(batwidget, vicious.widgets.bat, "<span color=\"#00FF88\">$2% $3</span>", 60, "BAT0")
+ vicious.register(batwidget, vicious.widgets.bat, "<span color=\"#00FF88\">$2% $3</span>", 5, "BAT0")
 
  -- Volume
  volwidget = wibox.widget.textbox()
@@ -220,7 +219,16 @@ mytasklist.buttons = awful.util.table.join(
         else 
             return "<span color=\"orange\">" .. args["{Artist}"]..' - '.. args["{Title}"] .. "</span> "
         end
-    end, 10)
+    end, 2)
+
+ -- Network
+ netwidget = wibox.widget.textbox()
+ -- Register widget
+ -- vicious.register(netwidget, vicious.widgets.net, '<span color="#CC9393">${enp0s20u3 down_kb}</span> <span color="#7F9F7F">${enp0s20u3 up_kb}</span>', 3)
+ vicious.register(netwidget, vicious.widgets.net, '<span color="#CC9393">${wlp2s0 down_kb}</span> <span color="#7F9F7F">${wlp2s0 up_kb}</span>', 3)
+ -- Icons
+ dnicon = wibox.widget.imagebox(theme.widget_net)
+ upicon = wibox.widget.imagebox(theme.widget_netup, false)
 
  -- END OF WIDGET ADDITION
 
@@ -253,6 +261,9 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(dnicon)
+    right_layout:add(netwidget)
+    right_layout:add(upicon)
     right_layout:add(langwidget)
     right_layout:add(mpdwidget)
     right_layout:add(volwidget)
