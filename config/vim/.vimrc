@@ -106,7 +106,9 @@
 
 " folding {
 	" Fold text
-	set foldmethod=indent
+	"set foldmethod=indent
+	set foldmethod=marker
+	set foldmarker={,}
 	set nofoldenable
 	"nnoremap <space> za
 "}
@@ -135,17 +137,21 @@
 				e%:r.hpp
 			elseif expand('%:e')=='hpp'
 				e%:r.cpp
+			elseif expand('%:e')=='tex'
+				!zathura %:r.pdf
 			endif
 		endfunction
 		" Use <F8> to apply the switch
-		nmap <silent>  <F8>  :call SwitchCH()<CR>
+		nmap <silent>  <F8>  :call SwitchCH()<CR><CR>
 	" }
 
 	" Compilation Latex, C, C++, java or Lisp {
 		function! MakeFile()
-			if expand('%:e')=='c'
+			if filereadable("Makefile")
+				:make %:r
+			elseif expand('%:e')=='c'
 				"!CLFAGS='-Wall -Wextra' make %:r
-				!gcc -Wall -Wextra -o %:r %
+				!gcc -Wall -Wextra -g -O0 -o %:r %
 			elseif expand('%:e')=='cpp'
 				!g++ -Wall -Wextra -o %:r %
 			elseif expand('%:e')=='java'
