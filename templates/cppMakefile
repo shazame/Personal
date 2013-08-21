@@ -1,0 +1,17 @@
+CC=g++
+#CPPFLAGS=-I.
+CXXFLAGS=-Wall -Wextra
+LDFLAGS=
+
+SRCDIR=.
+SRC=$(wildcard $(SRCDIR)/*.cpp)
+BIN=$(SRC:.cpp=)
+
+.PHONY: all clean
+
+all: $(BIN)
+
+%.o: %.cpp
+
+clean:
+	@ rm -f $(BIN) *~
