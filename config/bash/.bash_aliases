@@ -6,6 +6,7 @@ alias l='ls -CF'
 
 # Add default confirmation when deleting
 alias rm='rm -i'
+alias clean='find . -name "*~"'
 
 # Main used software aliases
 alias za='zathura'
@@ -16,5 +17,11 @@ alias go='cd ~/Eirbot/aversive.b_eirbot/projects/coupe2013/2A/'
 alias gopro='cd ~/ENSEIRB-MATMECA/S8/Project/'
 alias goc='cd ~/ENSEIRB-MATMECA/S8/Cours/'
 alias goi='cd ~/workspace/Internship/2A_AucklandUniversity/'
+alias life='cd ~/Documents/GameOfLife/'
+
+# Pacman convenient shorcuts
+alias pacupg='sudo pacman -Syu'
+alias pacin='sudo pacman -S'
+alias pacrm='sudo pacman -Rns'
 
 # vim: set syn=sh:

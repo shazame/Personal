@@ -43,6 +43,9 @@ $ pkgfile -l <package_name>
 # List packages no longer required as dependencies (orphans):
 $ pacman -Qdt
 
+# Listing all installed packages with size
+$ pacsysclean
+
 ================================================================================
 ============================== SERVICES MANAGEMENT ============================= 
 ================================================================================
