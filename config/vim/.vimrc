@@ -138,7 +138,7 @@
 			elseif expand('%:e')=='hpp'
 				e%:r.cpp
 			elseif expand('%:e')=='tex'
-				!zathura %:r.pdf
+				!zathura %:r.pdf &
 			endif
 		endfunction
 		" Use <F8> to apply the switch
