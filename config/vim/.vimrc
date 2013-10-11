@@ -161,6 +161,8 @@
 			elseif expand('%:e')=='lisp'
 				" !if [ ! -p /tmp/sbcl_in ]; then mkfifo /tmp/sbcl_in && tail -f -n +0 sbcl_in | sbcl; fi
 				Lisp
+			elseif expand('%:e')=='mac'
+				!maxima -b %
 			endif
 		endfunction
 		" Use <F9> to apply
