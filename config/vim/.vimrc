@@ -201,6 +201,14 @@
 	" }
 " }
 
+" Filetype specific {
+
+    " By default .max files are thought as asm files, we tell vim that we want
+	" them to be understood as maxima files
+	au BufNewFile,BufRead *.mac set filetype=maxima
+
+" }
+
 " Plugins {
 
 	" pathogen {
@@ -211,6 +219,7 @@
 	" }
 
 	" ctrlp {
+	    let g:ctrlp_extensions = ['line']
 	" }
 
 	" AutoComplPop {
