@@ -206,6 +206,7 @@
     " By default .max files are thought as asm files, we tell vim that we want
 	" them to be understood as maxima files
 	au BufNewFile,BufRead *.mac set filetype=maxima
+	au BufNewFile,BufRead *.mac colorscheme darkblue
 
 " }
 
@@ -220,6 +221,9 @@
 
 	" ctrlp {
 	    let g:ctrlp_extensions = ['line']
+	    let g:ctrlp_custom_ignore = {
+	            \ 'file': '\v(\.o|\.so|\.a|\~)$',
+	    \}
 	" }
 
 	" AutoComplPop {
