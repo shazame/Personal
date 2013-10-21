@@ -208,6 +208,8 @@
 	au BufNewFile,BufRead *.mac set filetype=maxima
 	au BufNewFile,BufRead *.mac colorscheme darkblue
 
+	" Put a nice colorscheme for scilab files
+	au BufNewFile,BufRead *.sce colorscheme delek
 " }
 
 " Plugins {
