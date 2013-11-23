@@ -1,0 +1,4 @@
+# Dynamic shell title, based on command used
+shelltitle '$ |bash'
+# New command opening root shell with special name
+bind R screen -t '# |root:' sudo su

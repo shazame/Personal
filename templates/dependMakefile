@@ -1,0 +1,30 @@
+CC=gcc
+CFLAGS= -Wall -Wextra -std=c99
+LDFLAGS= -lSDL -lSDL_image
+
+SRCDIR=src
+BINDIR=bin
+
+SRC=$(wildcard $(SRCDIR)/*.c)
+OBJ=$(SRC:.c=.o)
+
+.PHONY: all depend clean
+
+all: ${BINDIR}/pong
+
+${BINDIR}/pong: ${OBJ}
+	${CC} -o $@ $^ ${LDFLAGS}
+
+depend: .depend
+
+.depend: $(SRC)
+	rm -f ./.depend
+	$(CC) -MM $^ > ./.depend;
+
+include .depend
+
+clean:
+	@rm -f ${BINDIR}/*
+
+mrproper: clean
+	@find . -name *.o -delete
