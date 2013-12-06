@@ -101,7 +101,7 @@
 	" To have backspace delete spaces likes tabs
 	set softtabstop=4
 	" Replace tab character with space characters
-	"set expandtab
+	set expandtab
 " }
 
 " folding {
@@ -119,7 +119,7 @@
 
 	" To use tags
 	" Creates a ctags file
-	noremap <F6> :!ctags *<CR>
+	noremap <F6> :!ctags -R .<CR>
 	" Jump to the tag corresponding to what is under the cursor
 	noremap <F7> <C-]>
 
@@ -241,6 +241,25 @@
 		" Display filename and branch in the status bar
 		" set statusline=%f%50{fugitive#statusline()}
 		set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+	" }
+
+	" cscope {
+		if has('cscope')
+			set cscopetag cscopeverbose
+
+			if has('quickfix')
+				set cscopequickfix=s-,c-,d-,i-,t-,e-
+			endif
+
+			cnoreabbrev csa cs add
+			cnoreabbrev csf cs find
+			cnoreabbrev csk cs kill
+			cnoreabbrev csr cs reset
+			cnoreabbrev css cs show
+			cnoreabbrev csh cs help
+
+			command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
+		endif
 	" }
 
 " }
