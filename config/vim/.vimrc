@@ -258,6 +258,16 @@
 			cnoreabbrev css cs show
 			cnoreabbrev csh cs help
 
+			nnoremap <silent> ,a  :!cscope -b -R<C-D><CR>:cs add cscope.out<CR>
+			nnoremap <silent> ,c  :cs find c <cword><CR>
+			nnoremap <silent> ,d  :cs find d <cword><CR>
+			nnoremap <silent> ,e  :cs find e <cword><CR>
+			nnoremap <silent> ,f  :cs find f <cfile><CR>
+			nnoremap <silent> ,g  :cs find g <cword><CR>
+			nnoremap <silent> ,i  :cs find i <cfile><CR>
+			nnoremap <silent> ,s  :cs find s <cword><CR>
+			nnoremap <silent> ,t  :cs find t <cword><CR>
+
 			command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
 		endif
 	" }
