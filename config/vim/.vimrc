@@ -94,7 +94,7 @@
 	runtime ftplugin/man.vim
 " }
 
-" formatting {
+" Formatting {
 	set tabstop=4
 	" Number of column shifted with >> and <<
 	set shiftwidth=4
@@ -104,7 +104,7 @@
 	set expandtab
 " }
 
-" folding {
+" Folding {
 	" Fold text
 	"set foldmethod=indent
 	set foldmethod=marker
@@ -155,9 +155,9 @@
 			elseif expand('%:e')=='cpp'
 				!g++ -Wall -Wextra -o %:r %
 			elseif expand('%:e')=='java'
-				!javac % 
+				!javac %
 			elseif expand('%:e')=='tex'
-				!pdflatex % && pdflatex % && rm -f *~ *.aux *.log 
+				!pdflatex % && pdflatex % && rm -f *~ *.aux *.log
 			elseif expand('%:e')=='lisp'
 				" !if [ ! -p /tmp/sbcl_in ]; then mkfifo /tmp/sbcl_in && tail -f -n +0 sbcl_in | sbcl; fi
 				Lisp
@@ -194,7 +194,7 @@
 		nmap - :res -1
 
 		" Use <F2> to switch to the desired buffer
-		noremap <F2> :ls<CR>:b 
+		noremap <F2> :ls<CR>:b
 		" <F3> and <F4> to switch between buffers
 		noremap <F3> :bp<CR>
 		noremap <F4> :bn<CR>
@@ -202,8 +202,7 @@
 " }
 
 " Filetype specific {
-
-    " By default .max files are thought as asm files, we tell vim that we want
+	" By default .max files are thought as asm files, we tell vim that we want
 	" them to be understood as maxima files
 	au BufNewFile,BufRead *.mac set filetype=maxima
 	au BufNewFile,BufRead *.mac colorscheme darkblue
@@ -272,4 +271,34 @@
 		endif
 	" }
 
+" }
+
+" Project specific {
+	" A standalone function to get the project's root, or the parent directory
+	" of the current file if a root can't be found (see help ctrlp)
+	function s:GetProjectRoot()
+		let cph = expand('%:p:h', 1).'/'
+		if cph =~ '^.\+://' | retu | en
+		for mkr in ['.git/', '.hg/', '.svn/', '.bzr/', '_darcs/', '.vimprojects']
+			let wd = call('find'.(mkr =~ '/$' ? 'dir' : 'file'), [mkr, cph.';'])
+			if wd != '' | let &acd = 0 | brea | en
+		endfo
+		return fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', '', ''))
+	endfunction
+
+	" Allow per-project configuration file
+	set exrc
+	" Disable unsafe commands in project-specific .vimrc files
+	set secure
+
+	" Load project config file when even if it is not in the working directory
+	" Some protection are used to prevent loading ${HOME}/.vimrc twice
+	function s:LoadProjectVimrc()
+		if expand('%') != '.vimrc' && getcwd() != $HOME
+			let s:f = s:GetProjectRoot().'.vimrc'
+			if filereadable(s:f) | exe 'source' s:f | en
+		en
+	endfunction
+
+	autocmd BufEnter * call s:LoadProjectVimrc()
 " }
