@@ -276,14 +276,14 @@
 " Project specific {
 	" A standalone function to get the project's root, or the parent directory
 	" of the current file if a root can't be found (see help ctrlp)
-	function s:GetProjectRoot()
+	function! GetProjectRoot()
 		let cph = expand('%:p:h', 1).'/'
 		if cph =~ '^.\+://' | retu | en
 		for mkr in ['.git/', '.hg/', '.svn/', '.bzr/', '_darcs/', '.vimprojects']
 			let wd = call('find'.(mkr =~ '/$' ? 'dir' : 'file'), [mkr, cph.';'])
 			if wd != '' | let &acd = 0 | brea | en
 		endfo
-		return fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', '', ''))
+		return fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', './', ''))
 	endfunction
 
 	" Allow per-project configuration file
@@ -291,14 +291,44 @@
 	" Disable unsafe commands in project-specific .vimrc files
 	set secure
 
-	" Load project config file when even if it is not in the working directory
-	" Some protection are used to prevent loading ${HOME}/.vimrc twice
-	function s:LoadProjectVimrc()
-		if expand('%') != '.vimrc' && getcwd() != $HOME
-			let s:f = s:GetProjectRoot().'.vimrc'
-			if filereadable(s:f) | exe 'source' s:f | en
-		en
-	endfunction
+    " Project .vimrc{
+        " Load project config file when even if it is not in the working directory
+        " Some protection are used to prevent loading ${HOME}/.vimrc twice
+        function s:LoadProjectVimrc()
+            if expand('%') != '.vimrc' && getcwd() != $HOME
+                let s:f = GetProjectRoot().'.vimrc'
+                if filereadable(s:f) | exe 'source' s:f | en
+            en
+        endfunction
 
-	autocmd BufEnter * call s:LoadProjectVimrc()
+        autocmd BufEnter * call s:LoadProjectVimrc()
+    " }
+
+    " Cscope mapping adapted for a project {
+        function! LoadCscopeDatabase()
+            exe 'cd' GetProjectRoot()
+            !cscope -b -R
+            cs add cscope.out
+            cd -
+        endfunction
+
+        function! ProjectRootExe(cmd)
+            exe 'cd' GetProjectRoot()
+            exe a:cmd
+            cd -
+        endfunction
+
+        if has('cscope')
+            nnoremap <silent> ,a  :call LoadCscopeDatabase()<CR>
+            "nnoremap <silent> ,a  :call ProjectRootExe('!cscope -b -R')<CR>:call ProjectRootExe('cs add cscope.out')<CR>
+			nnoremap <silent> ,c  :call ProjectRootExe('cs find c <cword>')<CR>
+			nnoremap <silent> ,d  :call ProjectRootExe('cs find d <cword>')<CR>
+			nnoremap <silent> ,e  :call ProjectRootExe('cs find e <cword>')<CR>
+			nnoremap <silent> ,f  :call ProjectRootExe('cs find f <cfile>')<CR>
+			nnoremap <silent> ,g  :call ProjectRootExe('cs find g <cword>')<CR>
+			nnoremap <silent> ,i  :call ProjectRootExe('cs find i <cfile>')<CR>
+			nnoremap <silent> ,s  :call ProjectRootExe('cs find s <cword>')<CR>
+			nnoremap <silent> ,t  :call ProjectRootExe('cs find t <cword>')<CR>
+        endif
+    " }
 " }
