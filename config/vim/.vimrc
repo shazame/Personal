@@ -1,5 +1,5 @@
 " The following line is useful to navigate through this .vimrc using fold
-" vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell noexpandtab:
 
 " General {
 	" Use Vim settings, rather than Vi settings (much better!).  This must be
@@ -204,7 +204,7 @@
 " Filetype specific {
 	" By default .max files are thought as asm files, we tell vim that we want
 	" them to be understood as maxima files
-	au BufNewFile,BufRead *.mac set filetype=maxima
+	au BufNewFile,BufRead *.mac setlocal filetype=maxima
 	au BufNewFile,BufRead *.mac colorscheme darkblue
 
 	" Put a nice colorscheme for scilab files
@@ -221,10 +221,10 @@
 	" }
 
 	" ctrlp {
-	    let g:ctrlp_extensions = ['line']
-	    let g:ctrlp_custom_ignore = {
-	            \ 'file': '\v(\.o|\.so|\.a|\~)$',
-	    \}
+		let g:ctrlp_extensions = ['line']
+		let g:ctrlp_custom_ignore = {
+				\ 'file': '\v(\.o|\.so|\.a|\~)$',
+		\}
 	" }
 
 	" AutoComplPop {
@@ -266,8 +266,6 @@
 			nnoremap <silent> ,i  :cs find i <cfile><CR>
 			nnoremap <silent> ,s  :cs find s <cword><CR>
 			nnoremap <silent> ,t  :cs find t <cword><CR>
-
-			command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
 		endif
 	" }
 
@@ -286,41 +284,43 @@
 		return fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', './', ''))
 	endfunction
 
+	command! -nargs=0 Pcd exe 'cd' GetProjectRoot()
+
 	" Allow per-project configuration file
 	set exrc
 	" Disable unsafe commands in project-specific .vimrc files
 	set secure
 
-    " Project .vimrc{
-        " Load project config file when even if it is not in the working directory
-        " Some protection are used to prevent loading ${HOME}/.vimrc twice
-        function s:LoadProjectVimrc()
-            if expand('%') != '.vimrc' && getcwd() != $HOME
-                let s:f = GetProjectRoot().'.vimrc'
-                if filereadable(s:f) | exe 'source' s:f | en
-            en
-        endfunction
+	" Project .vimrc{
+		" Load project config file when even if it is not in the working directory
+		" Some protection are used to prevent loading ${HOME}/.vimrc twice
+		function s:LoadProjectVimrc()
+			if expand('%') != '.vimrc' && getcwd() != $HOME
+				let s:f = GetProjectRoot().'.vimrc'
+				if filereadable(s:f) | exe 'source' s:f | en
+			en
+		endfunction
 
-        autocmd BufEnter * call s:LoadProjectVimrc()
-    " }
+		autocmd BufNewFile,BufRead * call s:LoadProjectVimrc()
+	" }
 
-    " Cscope mapping adapted for a project {
-        function! LoadCscopeDatabase()
-            exe 'cd' GetProjectRoot()
-            !cscope -b -R
-            cs add cscope.out
-            cd -
-        endfunction
+	" Cscope mapping adapted for a project {
+		function! LoadCscopeDatabase()
+			exe 'cd' GetProjectRoot()
+			!cscope -b -R
+			cs add cscope.out
+			cd -
+		endfunction
 
-        function! ProjectRootExe(cmd)
-            exe 'cd' GetProjectRoot()
-            exe a:cmd
-            cd -
-        endfunction
+		function! ProjectRootExe(cmd)
+			exe 'cd' GetProjectRoot()
+			exe a:cmd
+			cd -
+		endfunction
 
-        if has('cscope')
-            nnoremap <silent> ,a  :call LoadCscopeDatabase()<CR>
-            "nnoremap <silent> ,a  :call ProjectRootExe('!cscope -b -R')<CR>:call ProjectRootExe('cs add cscope.out')<CR>
+		if has('cscope')
+			nnoremap <silent> ,a  :call LoadCscopeDatabase()<CR>
+			"nnoremap <silent> ,a  :call ProjectRootExe('!cscope -b -R')<CR>:call ProjectRootExe('cs add cscope.out')<CR>
 			nnoremap <silent> ,c  :call ProjectRootExe('cs find c <cword>')<CR>
 			nnoremap <silent> ,d  :call ProjectRootExe('cs find d <cword>')<CR>
 			nnoremap <silent> ,e  :call ProjectRootExe('cs find e <cword>')<CR>
@@ -329,6 +329,6 @@
 			nnoremap <silent> ,i  :call ProjectRootExe('cs find i <cfile>')<CR>
 			nnoremap <silent> ,s  :call ProjectRootExe('cs find s <cword>')<CR>
 			nnoremap <silent> ,t  :call ProjectRootExe('cs find t <cword>')<CR>
-        endif
-    " }
+		endif
+	" }
 " }
