@@ -295,7 +295,7 @@
 		" Load project config file when even if it is not in the working directory
 		" Some protection are used to prevent loading ${HOME}/.vimrc twice
 		function s:LoadProjectVimrc()
-			if expand('%') != '.vimrc' && getcwd() != $HOME
+			if expand('%:t') != '.vimrc' && getcwd() != $HOME && expand('%:e') != '~'
 				let s:f = GetProjectRoot().'.vimrc'
 				if filereadable(s:f) | exe 'source' s:f | en
 			en
