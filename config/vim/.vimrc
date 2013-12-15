@@ -277,7 +277,7 @@
 	function! GetProjectRoot()
 		let cph = expand('%:p:h', 1).'/'
 		if cph =~ '^.\+://' | retu | en
-		for mkr in ['.git/', '.hg/', '.svn/', '.bzr/', '_darcs/', '.vimprojects']
+		for mkr in ['.vimprojects', '.git/', '.hg/', '.svn/', '.bzr/', '_darcs/']
 			let wd = call('find'.(mkr =~ '/$' ? 'dir' : 'file'), [mkr, cph.';'])
 			if wd != '' | let &acd = 0 | brea | en
 		endfo
