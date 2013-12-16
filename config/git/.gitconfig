@@ -1,16 +1,17 @@
-[core]
-	editor = vim
-
-[diff]
-	tool = vimdiff
-
 [user]
 	name = David
 	email = david.bitonneau@gmail.com
-
 [alias]
-	st = status
-	ci = commit
 	co = checkout
+	ci = commit
+	st = status
 	br = branch
-	unstage = reset HEAD
+	unstage = "reset HEAD"
+[diff]
+	tool = gvimdiff
+[difftool]
+	prompt = false
+[merge]
+	tool = gvimdiff
+[core]
+	excludesfile = ~/.gitignore
