@@ -11,18 +11,28 @@ alias clean='find . -name "*~"'
 # Main used software aliases
 alias za='zathura'
 alias music='ncmpcpp --config .config/ncmpcpp/config'
+alias blender='~/Logiciels/blender-2.61-linux-glibc27-i686/blender'
+alias eclipse='/home/david/Logiciels/eclipse/eclipse'
 
 # Fav dir shortcuts
-alias go='cd ~/Eirbot/aversive.b_eirbot/projects/coupe2013/2A/'
-alias goa='cd /home/david/aversive/aversive/modules/devices/control_system/filters/'
-alias gopro='cd ~/ENSEIRB-MATMECA/S9/Project/'
+alias go='cd ~/aversive/aversive.b_eirbot/projects/coupe2013/2A/'
+alias gopro='cd ~/ENSEIRB-MATMECA/S9/Projects/'
 alias goc='cd ~/ENSEIRB-MATMECA/S9/Cours/'
 alias goi='cd ~/workspace/Internship/2A_AucklandUniversity/'
 alias life='cd ~/Documents/GameOfLife/'
 
-# Pacman convenient shorcuts
-alias pacupg='sudo pacman -Syu'
-alias pacin='sudo pacman -S'
-alias pacrm='sudo pacman -Rns'
+# Jump back n directories at a time
+alias ..='cd ..'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
+alias ......='cd ../../../../../'
+
+# Recursive directory listing
+alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'''
+
+# Aliases for git
+alias gl="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias lg='git log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"'
 
 # vim: set syn=sh:

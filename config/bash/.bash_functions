@@ -26,4 +26,9 @@ function marks {
     ls -l $MARKPATH | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/\t-/g' && echo
 }
 
+# git specific
+rgc() {
+    git commit -m"`curl -s http://whatthecommit.com/index.txt`"
+}
+
 # vim: set syn=sh:
