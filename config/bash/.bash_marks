@@ -1,0 +1,39 @@
+# Filesystem Markers & Jump (http://alias.sh)
+export MARKPATH=$HOME/.marks
+function jump {
+    cd -P $MARKPATH/$1 2>/dev/null || echo "No such mark: $1"
+}
+function mark {
+    mkdir -p $MARKPATH; ln -s $(pwd) $MARKPATH/$1
+}
+function unmark {
+    rm -i $MARKPATH/$1
+}
+function marks {
+    ls -l $MARKPATH | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/\t-/g' && echo
+}
+
+# Completion function for jump command
+_jump ()
+{
+  markfiles=`ls $MARKPATH`
+  local cur # Pointer to current completion word.
+
+  COMPREPLY=()   # Array variable storing the possible completions.
+  cur=${COMP_WORDS[COMP_CWORD]}
+
+  COMPREPLY=( $( compgen -W '$markfiles' -- $cur ) );
+  return 0
+}
+
+complete -F _jump jump
+
+# Fav dir shortcuts
+ln -fs ~/aversive/aversive.b_eirbot/projects/coupe2013/2A/ $MARKPATH/aversive
+ln -fs ~/ENSEIRB-MATMECA/S9/Projects/                      $MARKPATH/s9pro
+ln -fs ~/ENSEIRB-MATMECA/S9/Cours/                         $MARKPATH/s9c
+ln -fs ~/workspace/Internship/2A_AucklandUniversity/       $MARKPATH/intern
+ln -fs ~/Documents/GameOfLife/                             $MARKPATH/life
+ln -fs ~/workspace/Projects/                               $MARKPATH/pro
+
+# vim: set syn=sh:

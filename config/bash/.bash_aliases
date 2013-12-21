@@ -1,5 +1,8 @@
-# Messing with ls
+# Adding color to this life
+alias grep='grep --color=auto'
 alias ls='ls --color=auto'
+
+# Messing with ls
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -13,13 +16,6 @@ alias za='zathura'
 alias music='ncmpcpp --config .config/ncmpcpp/config'
 alias blender='~/Logiciels/blender-2.61-linux-glibc27-i686/blender'
 alias eclipse='/home/david/Logiciels/eclipse/eclipse'
-
-# Fav dir shortcuts
-alias go='cd ~/aversive/aversive.b_eirbot/projects/coupe2013/2A/'
-alias gopro='cd ~/ENSEIRB-MATMECA/S9/Projects/'
-alias goc='cd ~/ENSEIRB-MATMECA/S9/Cours/'
-alias goi='cd ~/workspace/Internship/2A_AucklandUniversity/'
-alias life='cd ~/Documents/GameOfLife/'
 
 # Jump back n directories at a time
 alias ..='cd ..'
