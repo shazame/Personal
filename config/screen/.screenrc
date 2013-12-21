@@ -1,4 +1,6 @@
 # Dynamic shell title, based on command used
+# needs the following variable to be set when using bash:
+# PROMPT_COMMAND='echo -n -e "\ek\e\\"'
 shelltitle '$ |bash'
 # New command opening root shell with special name
 bind R screen -t '# |root:' sudo su
