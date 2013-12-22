@@ -14,7 +14,7 @@ function marks {
 }
 
 # Completion function for jump command
-_jump ()
+_marks ()
 {
   markfiles=`ls $MARKPATH`
   local cur # Pointer to current completion word.
@@ -26,7 +26,8 @@ _jump ()
   return 0
 }
 
-complete -F _jump jump
+complete -F _marks jump
+complete -F _marks unmark
 
 # Fav dir shortcuts
 ln -fs ~/aversive/aversive.b_eirbot/projects/coupe2013/2A/ $MARKPATH/aversive
