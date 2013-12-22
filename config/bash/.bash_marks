@@ -30,11 +30,11 @@ complete -F _marks jump
 complete -F _marks unmark
 
 # Fav dir shortcuts
-ln -fs ~/aversive/aversive.b_eirbot/projects/coupe2013/2A/ $MARKPATH/aversive
-ln -fs ~/ENSEIRB-MATMECA/S9/Projects/                      $MARKPATH/s9pro
-ln -fs ~/ENSEIRB-MATMECA/S9/Cours/                         $MARKPATH/s9c
-ln -fs ~/workspace/Internship/2A_AucklandUniversity/       $MARKPATH/intern
-ln -fs ~/Documents/GameOfLife/                             $MARKPATH/life
-ln -fs ~/workspace/Projects/                               $MARKPATH/pro
+ln -Tfs ~/aversive/aversive.b_eirbot/projects/coupe2013/2A/ $MARKPATH/aversive
+ln -Tfs ~/ENSEIRB-MATMECA/S9/Projects/                      $MARKPATH/s9pro
+ln -Tfs ~/ENSEIRB-MATMECA/S9/Cours/                         $MARKPATH/s9c
+ln -Tfs ~/workspace/Internship/2A_AucklandUniversity/       $MARKPATH/intern
+ln -Tfs ~/Documents/GameOfLife/                             $MARKPATH/life
+ln -Tfs ~/workspace/Projects/                               $MARKPATH/pro
 
 # vim: set syn=sh:
