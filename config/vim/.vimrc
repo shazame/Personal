@@ -238,7 +238,7 @@
 
 	" fugitive {
 		" Display filename and branch in the status bar
-		" set statusline=%f%50{fugitive#statusline()}
+		"set statusline=%f%50{fugitive#statusline()}
 		set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 	" }
 
@@ -285,6 +285,7 @@
 	endfunction
 
 	command! -nargs=0 Pcd exe 'cd' GetProjectRoot()
+	command! -nargs=0 Showcd echo GetProjectRoot()
 
 	" Allow per-project configuration file
 	set exrc
@@ -295,8 +296,9 @@
 		" Load project config file when even if it is not in the working directory
 		" Some protection are used to prevent loading ${HOME}/.vimrc twice
 		function s:LoadProjectVimrc()
-			if expand('%:t') != '.vimrc' && getcwd() != $HOME && expand('%:e') != '~'
-				let s:f = GetProjectRoot().'.vimrc'
+			let s:root = GetProjectRoot()
+			if expand('%:t') != '.vimrc' && s:root != $HOME.'/' && expand('%:e') != '~'
+				let s:f = s:root.'.vimrc'
 				if filereadable(s:f) | exe 'source' s:f | en
 			en
 		endfunction
