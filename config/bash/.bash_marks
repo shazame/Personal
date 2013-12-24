@@ -1,6 +1,6 @@
 # Filesystem Markers & Jump (http://alias.sh)
 export MARKPATH=$HOME/.marks
-function jump {
+function go {
     cd -P $MARKPATH/$1 2>/dev/null || echo "No such mark: $1"
 }
 function mark {
@@ -13,7 +13,7 @@ function marks {
     ls -l $MARKPATH | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/\t-/g' && echo
 }
 
-# Completion function for jump command
+# Completion function for go command
 _marks ()
 {
   markfiles=`ls $MARKPATH`
@@ -26,7 +26,7 @@ _marks ()
   return 0
 }
 
-complete -F _marks jump
+complete -F _marks go
 complete -F _marks unmark
 
 # Fav dir shortcuts
