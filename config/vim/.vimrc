@@ -269,6 +269,9 @@
 		endif
 	" }
 
+	" snipMate {
+	" }
+
 " }
 
 " Project specific {
