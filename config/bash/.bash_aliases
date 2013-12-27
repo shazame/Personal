@@ -13,7 +13,7 @@ alias clean='find . -name "*~"'
 
 # Main used software aliases
 alias za='zathura'
-alias music='ncmpcpp --config .config/ncmpcpp/config'
+alias music='mpd ~/.config/mpd/mpd.conf'
 alias blender='~/Logiciels/blender-2.61-linux-glibc27-i686/blender'
 alias eclipse='/home/david/Logiciels/eclipse/eclipse'
 
