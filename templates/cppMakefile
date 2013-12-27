@@ -5,13 +5,17 @@ LDFLAGS=
 
 SRCDIR=.
 SRC=$(wildcard $(SRCDIR)/*.cpp)
+OBJ=$(SRC:.cpp=.o)
 BIN=$(SRC:.cpp=)
 
-.PHONY: all clean
+.PHONY: all clean mrproper
 
 all: $(BIN)
 
 %.o: %.cpp
 
 clean:
-	@ rm -f $(BIN) *~
+	@ rm -f $(OBJ) *~
+
+mrproper:
+	@ rm -f $(BIN)

@@ -24,7 +24,7 @@ depend: .depend
 include .depend
 
 clean:
-	@rm -f ${BINDIR}/*
+	@rm -f ${OBJ}
 
 mrproper: clean
-	@find . -name *.o -delete
+	@rm -f ${BINDIR}/*

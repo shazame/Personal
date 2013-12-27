@@ -4,13 +4,17 @@ LDFLAGS=
 
 SRCDIR=.
 SRC=$(wildcard $(SRCDIR)/*.c)
+OBJ=$(SRC:.c=.o)
 BIN=$(SRC:.c=)
 
-.PHONY: all clean
+.PHONY: all clean mrproper
 
 all: $(BIN)
 
 %.o: %.c
 
 clean:
-	@ rm -f $(BIN) *~
+	@ rm -f $(OBJ) *~
+
+mrproper:
+	@ rm -f $(BIN)
