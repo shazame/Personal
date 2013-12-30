@@ -1,0 +1,13 @@
+================================================================================
+==================================== GRML ======================================
+================================================================================
+
+# In order to have a powerful ready-to-go shell
+pacman -S grml-zsh-config
+# The following commands of this sections work with this zsh setup
+
+# List commands history
+dirs -v
+
+# Travel through the command history
+cd -<TAB>
