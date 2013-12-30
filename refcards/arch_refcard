@@ -13,11 +13,11 @@
 $ grub2-mkconfig -o /boot/efi/EFI/grub2/grub2.cfg
 
 ================================================================================
-============================== PACKAGES MANAGEMENT ============================= 
+============================== PACKAGES MANAGEMENT =============================
 ================================================================================
 
 # Synchronize repository database and update the system's packages
-$ pacman -Syu 
+$ pacman -Syu
 
 # Installing packages
 $ pacman -S <package_name1> <package_name2>
@@ -32,12 +32,12 @@ $ pacman -Rs
 
 # Display information about a given package of the database
 $ pacman -Si <package_name>
-# Display information about an already installed package 
+# Display information about an already installed package
 $ pacman -Qi <package_name>
 
 # List of files installed by a package
 $ pacman -Ql <package_name>
-# For packages not installed 
+# For packages not installed
 $ pkgfile -l <package_name>
 
 # List packages no longer required as dependencies (orphans):
@@ -47,7 +47,7 @@ $ pacman -Qdt
 $ pacsysclean
 
 ================================================================================
-============================== SERVICES MANAGEMENT ============================= 
+============================== SERVICES MANAGEMENT =============================
 ================================================================================
 
 $ systemctl [list-units]
@@ -87,9 +87,9 @@ $ systemctl enable myscript.service
 ============================== NETWORK MANAGEMENT ==============================
 ================================================================================
 
-         ============================================================ 
-         ========================= Etherenet ======================== 
-         ============================================================ 
+         ============================================================
+         ========================= Ethernet =========================
+         ============================================================
 
 # Display interfaces
 $ ip link [show]
@@ -115,9 +115,9 @@ $ ip link set enp0s20u3 down
 # Kill dhcpcd
 $ dhcpcd -k
 
-         ============================================================ 
-         ========================= Wireless ========================= 
-         ============================================================ 
+         ============================================================
+         ========================= Wireless =========================
+         ============================================================
 
 # Activate interface (e.g. wlp2s0)
 $ ip link set wlp2s0 up
@@ -139,7 +139,7 @@ $ iw dev wlp2s0 scan | less
 # Edit /etc/wpa_supplicant.conf with abode information
 # and issue this command:
 $ wpa_supplicant [-Dwext] -i wlp2s0 -c /etc/wpa_supplicant.conf
-# Use -B the run it in background
+# Use -B to run it in background
 
 # Check
 $ iw dev wlp2s0 link
@@ -152,9 +152,9 @@ $ dhcpcd wlp2s0
  $ ip route add default via 192.168.0.1
 )
 
-         ============================================================ 
-         ============ Manual Wireless Connection at boot ============ 
-         ============================================================ 
+         ============================================================
+         ============ Manual Wireless Connection at boot ============
+         ============================================================
 
 # Create /etc/conf.d/network (used to define variables)
 $ echo "interface=wlp2s0" >> /etc/conf.d/network
@@ -168,7 +168,7 @@ $ echo "interface=wlp2s0" >> /etc/conf.d/network
 #  Before=network.target
 #  BindsTo=sys-subsystem-net-devices-%i.device
 #  After=sys-subsystem-net-devices-%i.device
-#  
+#
 #  [Service]
 #  Type=oneshot
 #  RemainAfterExit=yes
@@ -176,7 +176,7 @@ $ echo "interface=wlp2s0" >> /etc/conf.d/network
 #  ExecStart=/usr/sbin/ip link set dev ${interface} up
 #  ExecStart=/usr/sbin/wpa_supplicant -B -i ${interface} -c /etc/wpa_supplicant.conf
 #  ExecStart=/sbin/dhcpcd ${interface}
-#  
+#
 #  [Install]
 #  WantedBy=multi-user.target
 
@@ -190,9 +190,9 @@ $ systemctl start network@wlp2s0.service
 $ systemctl stop network@wlp2s0.service
 $ systemctl disable network@wlp2s0.service
 
-         ============================================================ 
+         ============================================================
          =============== Automatic setup using Netctl ===============
-         ============================================================ 
+         ============================================================
 
 # man 1 netctl
 # man 5 netctl.profile
@@ -219,9 +219,9 @@ $ systemctl enable netctl-ifplugd@<interface>.service	# wired profiles
 # For non configured network
 $ wifi-menu
 
-         ============================================================ 
+         ============================================================
          =========== Automatic setup using Networkmanager ===========
-         ============================================================ 
+         ============================================================
 
 # man nmcli
 $ systemctl enable NetworkManager
@@ -231,7 +231,7 @@ $ systemctl start NetworkManager
 $ nmcli dev wifi connect <BSSID> password <password> iface wlp2s0
 
 # Solution 2: graphic
-$ nm-applet 
+$ nm-applet
 
 ================================================================================
 ================================== X server ====================================
@@ -313,7 +313,7 @@ $ rifle_sxiv PICTURES
 
 # Printer name can me found with
 $ smbtree
-# or 
+# or
 $ smbclient -L <address>
 
 # Using CUPS
