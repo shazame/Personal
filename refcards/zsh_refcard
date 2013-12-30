@@ -11,3 +11,64 @@ dirs -v
 
 # Travel through the command history
 cd -<TAB>
+
+##### Tips from http://grml.org/zsh-pony/ #####
+
+# 7 Fast Manpage access
+% autoload run-help
+% echo foo | xargs <esc-h>
+and then:
+% git commit<esc-h>
+or even ('g' being an alias for git and 'co' and git alias for commit):
+% g co<esc-h>
+
+# 10.6 Keybindings {up,down}-line-or-search and history-beginning-search-{backward,forward}-end
+% echo 123
+% echo 234
+% ls
+and then:
+% echo <cursor-up|down>
+vs.
+% echo 2<page-up|down>
+
+# 11.1 Play tetris
+% autoload -U tetris
+% tetris
+
+# 19.2 In-place mkdir to create directory under cursor or the selected area
+% cp file /tmp/doesnotexist/<ctrl-xM>
+
+# 19.3 Create a temporary directory and change cwd to it
+% cdt
+
+# 19.7 sudo-command-line
+% which sudo-command-line
+sudo-command-line () {
+        [[ -z $BUFFER ]] && zle up-history
+        if [[ $BUFFER != sudo\ * ]]
+        then
+                BUFFER="sudo $BUFFER"
+                CURSOR=$(( CURSOR+5 ))
+        fi
+}
+% gparted /dev/sda <ctrl-o s>
+
+# 21 Speed up typing
+# Long version	                               Short version
+for i in $(seq 2 9); do echo $i ; done	       for i in {2..9}; echo $i
+ls $(which vim)	                               ls =vim
+cat bar baz $PIPECHAR sort	                   sort <b{ar,az}
+ls /usr/share/doc/mutt/examples	               ls /u/s/d/m/e<tab>
+gzip -cd foo.gz && less foo	                   less <(gzip -cd foo.gz)
+ls >file1; ls >file2; ls >file3	               ls >file1 >file2 >file3
+-	                                           less <file1 <file2
+-	                                           diff <(sort foo) <(sort bar)
+-	                                           xpdf =(zcat ~doc/grml-docs/zsh/grml-zsh-refcard.pdf.gz)
+
+# 22 FAQ
+
+# Q: How to I get a listing of all my currently in use options?
+# Answer:
+  setopt ksh_option_print && setopt
+# or:
+  printf '%s=%s\n' "${(@kv)options}"
