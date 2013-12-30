@@ -1,0 +1,48 @@
+<?xml encoding="UTF-8" version="1.0"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<unique-id>1372055302733873-4</unique-id>
+	<command>exo-open --working-directory %f --launch TerminalEmulator</command>
+	<description>Example for a custom action</description>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon></icon>
+	<name>sxiv</name>
+	<unique-id>1375573322333876-1</unique-id>
+	<command>sxiv %F</command>
+	<description>sxiv</description>
+	<patterns>*</patterns>
+</action>
+<action>
+	<icon></icon>
+	<name>Rotate Right</name>
+	<unique-id>1377646799491793-1</unique-id>
+	<command>mogrify -rotate 90 %F</command>
+	<description>90 degrees rotation of the picture</description>
+	<patterns>*</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Rotate Left</name>
+	<unique-id>1377646864185285-2</unique-id>
+	<command>mogrify -rotate -90 %F</command>
+	<description>-90 rotation of the picture</description>
+	<patterns>*</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Resize 50%</name>
+	<unique-id>1377735454301645-2</unique-id>
+	<command>mogrify -resize 50%% %F</command>
+	<description></description>
+	<patterns>*</patterns>
+	<image-files/>
+</action>
+</actions>
