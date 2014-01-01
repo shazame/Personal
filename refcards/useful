@@ -606,3 +606,9 @@ $ lspci
 
 # display information on CPU architecture
 $ lscpu
+
+======================= fstab ==========================
+
+# cf. /etc/fstab
+# To find the uuid of a device
+$ ls -l /dev/disk/by-uuid/
