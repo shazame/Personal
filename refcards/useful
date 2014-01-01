@@ -592,3 +592,8 @@ $ iotop -oa
 $ split -1 toto.txt
 # Put each couple of lines in different files
 $ split -2 toto.txt
+
+======================== lsof ==========================
+
+# List open files
+$ lsof
