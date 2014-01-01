@@ -593,7 +593,16 @@ $ split -1 toto.txt
 # Put each couple of lines in different files
 $ split -2 toto.txt
 
-======================== lsof ==========================
+======================== ls* ==========================
 
 # List open files
 $ lsof
+
+# List USB devices
+$ lsusb
+
+# list PCI devices
+$ lspci
+
+# display information on CPU architecture
+$ lscpu
