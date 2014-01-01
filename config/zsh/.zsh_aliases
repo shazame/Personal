@@ -10,4 +10,17 @@ alias gl="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgree
 alias lg='git log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[33m%d%x1b[0m%x20%s %x1b[32m(%cr) %x1b[1;34m<%an>%x1b[0m"'
 alias gd='git diff --color'
 
+# Nice aliases
+alias music='ncmpcpp -c ~/.config/ncmpcpp/config'
+alias za='zathura'
+
+# Pacman aliases
+alias pacupg='sudo pacman -Syu'
+alias pacin='sudo pacman -S'
+alias pacrm='sudo pacman -Rns'
+alias pacsi='sudo pacman -Si'
+alias pacss='sudo pacman -Ss'
+alias pacloc='sudo pacman -Qi'
+alias paclocs='sudo pacman -Qs'
+
 # vim: set syn=sh:
