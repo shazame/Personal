@@ -592,3 +592,23 @@ $ iotop -oa
 $ split -1 toto.txt
 # Put each couple of lines in different files
 $ split -2 toto.txt
+
+======================== ls* ==========================
+
+# List open files
+$ lsof
+
+# List USB devices
+$ lsusb
+
+# list PCI devices
+$ lspci
+
+# display information on CPU architecture
+$ lscpu
+
+======================= fstab ==========================
+
+# cf. /etc/fstab
+# To find the uuid of a device
+$ ls -l /dev/disk/by-uuid/
