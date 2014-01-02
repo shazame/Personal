@@ -46,7 +46,8 @@ zmv -w '*toto*.txt' '$2toto$1.txt'
 zmv '([a-z])(*).txt' '${(C)1}$2.txt'
 zmv -w '[[:upper:]]*' '${(L)1}$2'
 
-# More powerful things can be achieved by combining it with recursive globbing
+# More powerful things can be achieved by combining it
+# with recursive globbing
 zmv '(**/)(*).txt' '$1$2.xml'
 zmv -w '**/*.txt' '$1$2.xml'
 
@@ -80,10 +81,11 @@ cd -<TAB>
 % echo foo | xargs <esc-h>
 and then:
 % git commit<esc-h>
-or even ('g' being an alias for git and 'co' and git alias for commit):
+or even ('g' being an alias for git and 'co' and git alias for commit)
 % g co<esc-h>
 
-# 10.6 Keybindings {up,down}-line-or-search and history-beginning-search-{backward,forward}-end
+# 10.6 Keybindings {up,down}-line-or-search
+# and history-beginning-search-{backward,forward}-end
 % echo 123
 % echo 234
 % ls
@@ -96,7 +98,8 @@ vs.
 % autoload -U tetris
 % tetris
 
-# 19.2 In-place mkdir to create directory under cursor or the selected area
+# 19.2 In-place mkdir to create directory under cursor
+# or the selected area
 % cp file /tmp/doesnotexist/<ctrl-xM>
 
 # 19.3 Create a temporary directory and change cwd to it
@@ -115,16 +118,16 @@ sudo-command-line () {
 % gparted /dev/sda <ctrl-o s>
 
 # 21 Speed up typing
-# Long version	                               Short version
-for i in $(seq 2 9); do echo $i ; done	       for i in {2..9}; echo $i
-ls $(which vim)	                               ls =vim
-cat bar baz $PIPECHAR sort	                   sort <b{ar,az}
-ls /usr/share/doc/mutt/examples	               ls /u/s/d/m/e<tab>
-gzip -cd foo.gz && less foo	                   less <(gzip -cd foo.gz)
-ls >file1; ls >file2; ls >file3	               ls >file1 >file2 >file3
--	                                           less <file1 <file2
--	                                           diff <(sort foo) <(sort bar)
--	                                           xpdf =(zcat ~doc/grml-docs/zsh/grml-zsh-refcard.pdf.gz)
+# Long version	                         Short version
+for i in $(seq 2 9); do echo $i ; done	 for i in {2..9}; echo $i
+ls $(which vim)	                         ls =vim
+cat bar baz $PIPECHAR sort	             sort <b{ar,az}
+ls /usr/share/doc/mutt/examples	         ls /u/s/d/m/e<tab>
+gzip -cd foo.gz && less foo	             less <(gzip -cd foo.gz)
+ls >file1; ls >file2; ls >file3	         ls >file1 >file2 >file3
+-	                                     less <file1 <file2
+-	                                     diff <(sort foo) <(sort bar)
+-	                                     xpdf =(zcat ~doc/grml-docs/zsh/grml-zsh-refcard.pdf.gz)
 
 # 22 FAQ
 
