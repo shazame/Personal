@@ -8,6 +8,11 @@ if [ -r ${ZDOTDIR:-${HOME}}/.zsh_marks ]; then
     source ${ZDOTDIR:-${HOME}}/.zsh_marks
 fi
 
+# Custom completion settings
+fpath=(${ZDOTDIR:-${HOME}}/completion $fpath)
+autoload -U compinit
+compinit
+
 ## Nice prompt
 #autoload -U promptinit
 #promptinit
