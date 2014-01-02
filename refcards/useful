@@ -553,10 +553,10 @@ $ gpg --gen-key
 # Generate ASCII version of public key
 $ gpg --armor --output public.key --export 'Your Name'
 # List keys in public and secrete key ring
-$ gpg --list-keys
-$ gpg --list-secret-keys
+$ gpg --list-keys              # gpg -k
+$ gpg --list-secret-keys       # gpg -K
 
-# Usage:
+## Usage:
 
 # Encrypt a file with private key
 $ gpg -e -r David <secret.tar>
@@ -566,6 +566,23 @@ $ gpg -c <secret.tar>
 
 # Decrypt a file data
 $ gpg -d <secret.tar.pgp>
+
+## Moving a gpg key privately
+# (thanks montemazuma.wordpress.com/2010/03/01/moving-a-gpg-key-privately/)
+
+# Find the key id
+gpg -K
+
+# Import the public key
+gpg --output pubkey.gpg --export {KEYID}
+
+# Combine public and secret key export
+gpg --output - --export-secret-ke {KEYID} |\
+  cat pubkey.gpg - |\
+  gpg --armor --output keys.asc --symmetric --cipher-algo AES256
+
+# Now the key can be imported with:
+gpg --output - keys.asc | gpg --import
 
 ========================= nmap =========================
 
