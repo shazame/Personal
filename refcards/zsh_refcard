@@ -2,9 +2,16 @@
 =================================== General ====================================
 ================================================================================
 
-         ==============================================================         
-         =================== Arithmetic Evaluation ====================         
-         ==============================================================         
+# Recursive globbing
+**/*.c
+# Allow to to things such as
+rm **/*~
+# or
+ls **/*.c
+
+         ==============================================================
+         =================== Arithmetic Evaluation ====================
+         ==============================================================
 
 # It is possible to perform usual arithmetic evaluation with zsh
 % echo $(( 3 + 5 ))        # 8
@@ -15,6 +22,42 @@
 % echo $(( 7. / 2 ))       # 3.5
 % echo $(( 2. ** 0.5 ))    # 1.4142135...
 % echo $(( 2. ** (1./2) )) # 1.4142135...
+
+================================================================================
+================================ zsh functions =================================
+================================================================================
+
+         ==============================================================
+         ============================ zmv =============================
+         ==============================================================
+
+# zmv can be used to perform powerful file renaming
+# The following commands give the same result
+zmv '(*).txt' '$1.html'
+zmv -w '*.txt' '$1.html'
+zmv -W '*.txt' '*.html'
+
+# Another example to show more of its capabilities
+touch toto{1,2,3,4,5}.txt
+zmv -w 'toto*.txt' '$((10-$1))toto$1.txt'
+zmv -w '*toto*.txt' '$2toto$1.txt'
+
+# Case manipulation can be done
+zmv '([a-z])(*).txt' '${(C)1}$2.txt'
+zmv -w '[[:upper:]]*' '${(L)1}$2'
+
+# More powerful things can be achieved by combining it with recursive globbing
+zmv '(**/)(*).txt' '$1$2.xml'
+zmv -w '**/*.txt' '$1$2.xml'
+
+# zmv can even be used to copy files with the -C option
+zmv -C '**/(*).txt' ~/save/'$1'.lis
+
+# or to link files with -L
+# or to specify another program to run with -p
+
+# Note: it is possible print what will happen with -n option
+
 
 ================================================================================
 ==================================== GRML ======================================
