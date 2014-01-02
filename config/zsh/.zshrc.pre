@@ -1,0 +1,2 @@
+# Show battery status in RPROMPT
+BATTERY=1
