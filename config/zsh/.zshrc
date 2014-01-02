@@ -1,7 +1,11 @@
 # An impressive base zshrc is used: pacman -S grml-zsh-config
 
-if [ -f ~/.zsh_aliases ]; then
-  source ~/.zsh_aliases
+if [ -r ${ZDOTDIR:-${HOME}}/.zsh_aliases ]; then
+    source ${ZDOTDIR:-${HOME}}/.zsh_aliases
+fi
+
+if [ -r ${ZDOTDIR:-${HOME}}/.zsh_marks ]; then
+    source ${ZDOTDIR:-${HOME}}/.zsh_marks
 fi
 
 ## Nice prompt
