@@ -10,6 +10,21 @@ rm **/*~
 ls **/*.c
 
          ====================================================
+         ===================== Aliases ======================
+         ====================================================
+
+# Aliases have been enhanced with alias -g and alias -s
+
+# alias -g is used to define global aliases
+# (they are expanded anywhere on the command line)
+alias -g L='| less'; grep -r foo . L
+# But as caphuso (ft.bewatermyfriend.org/comp/zshtalk.txt) says,
+# global aliases are dangerous
+
+# alias -s defines suffix aliases
+alias -s pdf=zathura
+
+         ====================================================
          ============== Arithmetic Evaluation ===============
          ====================================================
 

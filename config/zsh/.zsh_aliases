@@ -23,4 +23,7 @@ alias pacss='sudo pacman -Ss'
 alias pacloc='sudo pacman -Qi'
 alias paclocs='sudo pacman -Qs'
 
+# Suffix aliases
+alias -s pdf=zathura
+
 # vim: set syn=sh:
