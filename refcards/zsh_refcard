@@ -2,12 +2,26 @@
 ============================== General ===============================
 ======================================================================
 
+         ====================================================
+         ==================== Globbing ======================
+         ====================================================
+
 # Recursive globbing
 **/*.c
 # Allow to to things such as
 rm **/*~
 # or
 ls **/*.c
+
+# Match file type
+*(.)   # matches only regular files
+*(/)   # matches only directories
+
+# Match file permissions
+*(f:a+x,o+w:)
+
+# e glob qualifier
+*(e:'file $REPLY | grep -q JPEG':) # matches JPEG files
 
          ====================================================
          ===================== Aliases ======================
