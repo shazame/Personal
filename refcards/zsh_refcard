@@ -24,6 +24,29 @@ ls **/*.c
 *(e:'file $REPLY | grep -q JPEG':) # matches JPEG files
 
          ====================================================
+         ============== Parameter expansion  ================
+         ====================================================
+
+# Some example to understand
+lkj='foototobar'
+# Removing foo at the beginning
+echo ${lkj#foo}
+# Removing bar at the end
+echo ${lkj%bar}
+# Expansion inside expansion
+echo ${${lkj%bar}#foo}
+echo ${${lkj#foo}%bar}
+
+# Display filename without path
+for a in **/*(.); echo ${a:t}
+# Display path without filename
+for a in **/*(.); echo ${a:h}
+# Display file extension only
+for a in **/*(.); echo ${a:e}
+# Display file name without extension and path
+for a in **/*(.); echo ${a:t:r}
+
+         ====================================================
          ===================== Aliases ======================
          ====================================================
 
