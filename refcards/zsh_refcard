@@ -38,6 +38,26 @@ alias -s pdf=zathura
 % echo $(( 2. ** 0.5 ))    # 1.4142135...
 % echo $(( 2. ** (1./2) )) # 1.4142135...
 
+         ====================================================
+         ===================== Modules ======================
+         ====================================================
+
+# Modules can be loaded dynamically to enhance zsh capabilities
+# For example there is a math module to do things like
+% echo $(( sin(5) ))
+
+# Loaded modules can be listed
+% zmodload
+
+# The features of a module can be listed
+% zmodload -Fl zsh/mathfunc
+
+# To load a module
+$ zmodload <module-name>
+#
+# To unload a module
+$ zmodload -u <module-name>
+
 ======================================================================
 =========================== zsh functions ============================
 ======================================================================
