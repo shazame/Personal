@@ -612,3 +612,14 @@ $ lscpu
 # cf. /etc/fstab
 # To find the uuid of a device
 $ ls -l /dev/disk/by-uuid/
+
+======================= rsync ==========================
+
+# Transfer recursively files from a directory to another
+# ("copy the directory by name")
+$ rsync -avz src dst
+
+# Adding a trailing slash ensures that no additional
+# directory level is created at the destination
+# ("copy the contents of the directory")
+$ rsync -avz src/ dst
