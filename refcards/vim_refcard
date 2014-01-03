@@ -97,12 +97,12 @@ switch it to uppercase using \u
 
 :%s/positionnner \(curseur\) \(..\)/Positionner \U\1 \u\2/
 -> a tester dans ce fichier pour comprendre
-When searching: 
-\(foo\) makes a backreference to foo. Parenthesis without escapes are literally matched. Here the \ is required for the closing \). 
+When searching:
+\(foo\) makes a backreference to foo. Parenthesis without escapes are literally matched. Here the \ is required for the closing \).
 When replacing:
-\r is newline, \n is a null byte (0x00). 
-\& is ampersand (& is the text that matches the search pattern). 
-\1 inserts the text of the first backreference. \2 inserts the second backreference, and so on. 
+\r is newline, \n is a null byte (0x00).
+\& is ampersand (& is the text that matches the search pattern).
+\1 inserts the text of the first backreference. \2 inserts the second backreference, and so on.
 
 /permet
 puis
@@ -115,17 +115,17 @@ puis
 -> pour écrire une liste de nombres de 2 façons différentes
 
 :.,$s/.*/"&"/
--> pour mettre des guillemets au début et à la fin de toutes les lignes, 
+-> pour mettre des guillemets au début et à la fin de toutes les lignes,
 à partir de la ligne courante jusqu'à la dernière ligne
 
 :.,$g/^\d/exe "normal! \<C-a>"
 -> incrémente tous les nombres entre la ligne courante et la dernière ligne
 
 TOUJOURS PLUS PUISSANT :
-<range>perldo s/(\d+)/$1+1/ge 
+<range>perldo s/(\d+)/$1+1/ge
 -> s'ils y a plusieurs nombres sur une ligne ils seront tous incrémentés
 À partir de là on peut faire ce que l'on veut :
-<range>perldo s/(\d+)/($1+5\/2)*3/ge 
+<range>perldo s/(\d+)/($1+5\/2)*3/ge
 
 :g/^->/exe "normal: VU"
 -> met en majuscule toutes les lignes qui commencent par "->"
@@ -144,7 +144,7 @@ exemple de ligne à ajouter dans un fichier pour modifier la configuration de
 vim pour ce fichier
 dans un fichier .c :
 // vim: set tabstop=2 shiftwidth=2 softtabstop=2 expandtab:
-dans le vimrc : 
+dans le vimrc :
 " vim: set foldmarker={,} foldlevel=0 foldmethod=marker:
 
 gj and gk
@@ -233,21 +233,21 @@ mv titi    test_titi;
 :reg
 
 # En mode insertion :
-<C-r><nom_du_registre>
+<C-r><nom_du_registre>  # <C-R> is equivalent to <C-r>
 # insère le contenu du registre
 # ex :
 # insérer le nom du fichier
-<C-r>%				
+<C-r>%
 # insérer la dernière commande tapée
-<C-r>%				
+<C-r>:
 # printer le résultat du calcul
 <C-r>= <entrer une opération>
-# fonctionne aussi avec les opérations de base : 
+# fonctionne aussi avec les opérations de base :
 # cos, sin, tan, exp, log, sqrt, pow, ...
 <C-r>=cos(32.4)*cos(32.4)+sin(32.4)*sin(32.4)
 # -> 1.0
 
-# Utilisation avancée 
+# Utilisation avancée
 # Copier la ligne suivante
 cos(32.4)*cos(32.4)+sin(32.4)*sin(32.4)
 # Et faire :
