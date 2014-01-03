@@ -352,3 +352,34 @@ wlejfwlekjflkwejflwkjflew              wekfljwel
 # Now the file is encrypted
 # each time you will open the file with vim, you will be asked for the key
 # No other editor can be used to open it
+
+================================================================================
+===============================  Search commands ===============================
+================================================================================
+
+# Same as "*" but without "\<" and "\>"
+g*
+# Goto local Declaration
+gd
+
+================================================================================
+===================================  Motion  ===================================
+================================================================================
+
+# Goto next occurence of {char} to the right
+f{char}
+# Goto next occurence of {char} to the left
+F{char}
+# Till before next occurence of {char} to the right
+t{char}
+# Till before next occurence of {char} to the left
+T{char}
+
+# Go to previous unmatched '{'.
+[{
+# Go to previous unmatched '('.
+[(
+# Go to next unmatched '}'.
+]}
+# Go to next unmatched ')'.
+])
