@@ -202,11 +202,13 @@
 
 	" Refactoring {
 	    " (Thanks to http://stackoverflow.com/a/597932)
-		" For local replace
-		nnoremap gr gd[{V%:s/<C-R>///gc<left><left><left>
+		" For local replace in a single file
+		nnoremap glr gd[{V%:s/<C-R>///gc<left><left><left>
+		" For global replace in a single file
+		nnoremap gr gD:%s/<C-R>///gc<left><left><left>
 
-		" For global replace
-		nnoremap gR gD:%s/<C-R>///gc<left><left><left>
+		" For global replace in every buffers
+		nnoremap gR *:bufdo %s/<C-R>///gc<left><left><left>
 	" }
 " }
 
