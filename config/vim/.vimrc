@@ -188,7 +188,7 @@
 
 	" Buffers {
 		" Change buffer size easily
-		nmap >  :vertical res +1
+		nmap > :vertical res +1
 		nmap < :vertical res -1
 		nmap + :res +1
 		nmap - :res -1
@@ -198,6 +198,15 @@
 		" <F3> and <F4> to switch between buffers
 		noremap <F3> :bp<CR>
 		noremap <F4> :bn<CR>
+	" }
+
+	" Refactoring {
+	    " (Thanks to http://stackoverflow.com/a/597932)
+		" For local replace
+		nnoremap gr gd[{V%:s/<C-R>///gc<left><left><left>
+
+		" For global replace
+		nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 	" }
 " }
 
