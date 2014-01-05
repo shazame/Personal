@@ -1,20 +1,20 @@
-================================================================================
-===================================== TODO =====================================
-================================================================================
+======================================================================
+================================ TODO ================================
+======================================================================
 
 # See opt. dependencies for awesome to have good widgets
 # Look at delightful for awesome
 
-================================================================================
-=============================== GRUB INSTALLATION ==============================
-================================================================================
+======================================================================
+========================== GRUB INSTALLATION =========================
+======================================================================
 
 # GRUB2 configuration:
 $ grub2-mkconfig -o /boot/efi/EFI/grub2/grub2.cfg
 
-================================================================================
-============================== PACKAGES MANAGEMENT =============================
-================================================================================
+======================================================================
+========================= PACKAGES MANAGEMENT ========================
+======================================================================
 
 # Synchronize repository database and update the system's packages
 $ pacman -Syu
@@ -27,7 +27,8 @@ $ pkgfile vim
 
 # Removing packages
 $ pacman -R
-# Remove package and dependencies not required by other installed package
+# Remove package and dependencies not required 
+# by other installed package
 $ pacman -Rs
 
 # Display information about a given package of the database
@@ -46,9 +47,9 @@ $ pacman -Qdt
 # Listing all installed packages with size
 $ pacsysclean
 
-================================================================================
-============================== SERVICES MANAGEMENT =============================
-================================================================================
+======================================================================
+========================= SERVICES MANAGEMENT ========================
+======================================================================
 
 $ systemctl [list-units]
 $ systemctl list-unit-files
@@ -83,13 +84,13 @@ $ systemctl start myscript.service
 # And even enabled, so that our script is launched at start up
 $ systemctl enable myscript.service
 
-================================================================================
-============================== NETWORK MANAGEMENT ==============================
-================================================================================
+======================================================================
+========================= NETWORK MANAGEMENT =========================
+======================================================================
 
-         ============================================================
-         ========================= Ethernet =========================
-         ============================================================
+    ============================================================
+    ========================= Ethernet =========================
+    ============================================================
 
 # Display interfaces
 $ ip link [show]
@@ -115,9 +116,9 @@ $ ip link set enp0s20u3 down
 # Kill dhcpcd
 $ dhcpcd -k
 
-         ============================================================
-         ========================= Wireless =========================
-         ============================================================
+    ============================================================
+    ========================= Wireless =========================
+    ============================================================
 
 # Activate interface (e.g. wlp2s0)
 $ ip link set wlp2s0 up
@@ -152,9 +153,9 @@ $ dhcpcd wlp2s0
  $ ip route add default via 192.168.0.1
 )
 
-         ============================================================
-         ============ Manual Wireless Connection at boot ============
-         ============================================================
+    ============================================================
+    ============ Manual Wireless Connection at boot ============
+    ============================================================
 
 # Create /etc/conf.d/network (used to define variables)
 $ echo "interface=wlp2s0" >> /etc/conf.d/network
@@ -190,9 +191,9 @@ $ systemctl start network@wlp2s0.service
 $ systemctl stop network@wlp2s0.service
 $ systemctl disable network@wlp2s0.service
 
-         ============================================================
-         =============== Automatic setup using Netctl ===============
-         ============================================================
+    ============================================================
+    =============== Automatic setup using Netctl ===============
+    ============================================================
 
 # man 1 netctl
 # man 5 netctl.profile
@@ -213,15 +214,14 @@ $ netctl enable <profile>
 
 # For multiple profiles
 $ systemctl enable netctl-auto@<interface>.service	# wireless profiles
-$ systemctl enable netctl-ifplugd@<interface>.service	# wired profiles
-
+$ systemctl enable netctl-ifplugd@<interface>.service # wired profiles
 
 # For non configured network
 $ wifi-menu
 
-         ============================================================
-         =========== Automatic setup using Networkmanager ===========
-         ============================================================
+    ============================================================
+    =========== Automatic setup using Networkmanager ===========
+    ============================================================
 
 # man nmcli
 $ systemctl enable NetworkManager
@@ -233,9 +233,9 @@ $ nmcli dev wifi connect <BSSID> password <password> iface wlp2s0
 # Solution 2: graphic
 $ nm-applet
 
-================================================================================
-================================== X server ====================================
-================================================================================
+======================================================================
+============================= X server ===============================
+======================================================================
 
 # Configure
 $ vim /etc/X11/xinit/xinitrc
@@ -248,7 +248,8 @@ $ startx
 $ pacman -S slim
 # Edit ~/.xinitrc to configure SLiM to load a particular environment
 $ echo "exec awesome" >> ~/.xinitrc
-# Multiple environments: put something like this at the end of ~/.xinitrc
+# Multiple environments:
+# put something like this at the end of ~/.xinitrc
 	case $1 in
 	blackbox)
 		exec blackbox
@@ -279,9 +280,9 @@ $ slim -p /usr/share/slim/themes/<theme name>
 
 $ xev
 
-================================================================================
-================================ MISCELLANEOUS =================================
-================================================================================
+======================================================================
+=========================== MISCELLANEOUS ============================
+======================================================================
 
 ========== Analyse system boot-up performance ==========
 
@@ -325,7 +326,8 @@ $ cupsd
 # Printers can be added and configured
 
 # Now it is possible to view printer queue and print
-# see https://wiki.archlinux.org/index.php/CUPS#Command-line_configuration
+# see:
+# https://wiki.archlinux.org/index.php/CUPS#Command-line_configuration
 $ lpq -P <printer_name>
 $ lpr -P <printer_name> <file>
 
