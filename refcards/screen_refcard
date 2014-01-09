@@ -1,0 +1,5 @@
+# Scrolling in screen's buffer
+# (thx: http://www.cyberciti.biz/faq/scroll-up-down-look-at-data-in-gnuscreen-using-pageup-pagedown-keys/)
+# First enter copy mode
+Ctrl+ESC or Ctrl+[
+# Then it is possible to move with vim-like keys or PGUP/PGDOWN
