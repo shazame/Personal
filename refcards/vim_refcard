@@ -15,7 +15,8 @@ ga -> code ascii du caractère
 
 <C-o> -> remonte dans l'historique des positions du curseur
 
-gqq -> formatter le texte pour ne pas dépasser les 78 caractères sur une ligne
+gqq -> formatter le texte pour ne pas dépasser les <textwidth>
+caractères sur une ligne
 
 daw -> Delete A Word
 
