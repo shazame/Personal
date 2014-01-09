@@ -1,0 +1,7 @@
+# To scroll a buffer
+# thx: 
+# http://www.saltycrane.com/blog/2008/01/how-to-scroll-in-gnu-screen/
+# enter copy mode:
+Ctrl + [ or Ctrl + ESC
+# then screen's buffer can be scrolled using arrow keys,
+# PGUP/PGDOWN and even vim-like keys
