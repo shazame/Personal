@@ -1,350 +1,372 @@
-======================================================================
-================================ TODO ================================
-======================================================================
-
-# See opt. dependencies for awesome to have good widgets
-# Look at delightful for awesome
-
-======================================================================
-========================== GRUB INSTALLATION =========================
-======================================================================
-
-# GRUB2 configuration:
-$ grub2-mkconfig -o /boot/efi/EFI/grub2/grub2.cfg
-
-======================================================================
-========================= PACKAGES MANAGEMENT ========================
-======================================================================
-
-# Synchronize repository database and update the system's packages
-$ pacman -Syu
-
-# Installing packages
-$ pacman -S <package_name1> <package_name2>
-
-# Which package owns a specific file (e.g. vim)
-$ pkgfile vim
-
-# Removing packages
-$ pacman -R
-# Remove package and dependencies not required 
-# by other installed package
-$ pacman -Rs
-
-# Display information about a given package of the database
-$ pacman -Si <package_name>
-# Display information about an already installed package
-$ pacman -Qi <package_name>
-
-# List of files installed by a package
-$ pacman -Ql <package_name>
-# For packages not installed
-$ pkgfile -l <package_name>
-
-# List packages no longer required as dependencies (orphans):
-$ pacman -Qdt
-
-# Listing all installed packages with size
-$ pacsysclean
-
-======================================================================
-========================= SERVICES MANAGEMENT ========================
-======================================================================
-
-$ systemctl [list-units]
-$ systemctl list-unit-files
-$ systemctl status <servicename>.service
-$ systemctl enable <servicename>.service
-$ systemctl start <servicename>.service
-$ systemctl stop <servicename>.service
-
-# Services can be used to have script launch a start up
-# Let's say the script we want is /usr/local/bin/myscript.sh
-# Now we create the service file in /usr/lib/systemd/system/
-
-########## myscript.service ##########
-[Unit]
-Description=My script description
-After=systemd-udevd.service
-
-[Service]
-Type=oneshot
-RemainAfterExit=yes
-ExecStart=/usr/local/bin/myscript start
-ExecStop=/usr/local/bin/myscript stop
-
-[Install]
-WantedBy=multi-user.target
-####### end of myscript.service ######
-
-# Now reaload systemd manager configuration
-$ systemctl daemon-reload
-# The service can be started
-$ systemctl start myscript.service
-# And even enabled, so that our script is launched at start up
-$ systemctl enable myscript.service
-
-======================================================================
-========================= NETWORK MANAGEMENT =========================
-======================================================================
-
-    ============================================================
-    ========================= Ethernet =========================
-    ============================================================
-
-# Display interfaces
-$ ip link [show]
--> choose the right interface (e.g. enp0s20u3)
-# Set this interface up
-$ ip link set enp0s20u3 up
-# Launch dhcp client to have an ip address dynamically chosen
-$ dhcpcd enp0s20u3
-(
- #or use static addressing:
- $ ip addr add 192.168.0.30/24 dev enp0s20u3
- $ ip route add default via 192.168.0.1
-)
-# That's it!
-
-# Check
-$ ping -c 3 www.google.com
-# Display routes
-$ ip route [show]
-
-# Disable
-$ ip link set enp0s20u3 down
-# Kill dhcpcd
-$ dhcpcd -k
-
-    ============================================================
-    ========================= Wireless =========================
-    ============================================================
-
-# Activate interface (e.g. wlp2s0)
-$ ip link set wlp2s0 up
-
-# See what access points are available
-$ iw dev wlp2s0 scan | less
-
-# Example of interesting part in result:
-#
-#   BSS 00:19:70:99:27:8e (on wlp2s0)
-#   	SSID: Livebox-c1dc
-#   	WPA:	 * Version: 1
-#   		 * Group cipher: TKIP
-#   		 * Pairwise ciphers: CCMP TKIP
-#   		 * Authentication suites: PSK
-#                ...
-#   		 * UUID: 6c2e85a4-c1dc-6c2e-85a4-c1dc85a4c1dc
-
-# Edit /etc/wpa_supplicant.conf with abode information
-# and issue this command:
-$ wpa_supplicant [-Dwext] -i wlp2s0 -c /etc/wpa_supplicant.conf
-# Use -B to run it in background
-
-# Check
-$ iw dev wlp2s0 link
-
-# Getting an IP address
-$ dhcpcd wlp2s0
-(
- #or use static addressing:
- $ ip addr add 192.168.0.30/24 dev wlp2s0
- $ ip route add default via 192.168.0.1
-)
-
-    ============================================================
-    ============ Manual Wireless Connection at boot ============
-    ============================================================
-
-# Create /etc/conf.d/network (used to define variables)
-$ echo "interface=wlp2s0" >> /etc/conf.d/network
-
-# Create /etc/systemd/system/network@wlp2s0.service
-# (the import file used to define and configure a new service)
-# The file should contain this:
-#  [Unit]
-#  Description=Network Connectivity (%i)
-#  Wants=network.target
-#  Before=network.target
-#  BindsTo=sys-subsystem-net-devices-%i.device
-#  After=sys-subsystem-net-devices-%i.device
-#
-#  [Service]
-#  Type=oneshot
-#  RemainAfterExit=yes
-#  EnvironmentFile=/etc/conf.d/network
-#  ExecStart=/usr/sbin/ip link set dev ${interface} up
-#  ExecStart=/usr/sbin/wpa_supplicant -B -i ${interface} -c /etc/wpa_supplicant.conf
-#  ExecStart=/sbin/dhcpcd ${interface}
-#
-#  [Install]
-#  WantedBy=multi-user.target
-
-# Now enable the service to be started on bootup
-$ systemctl enable network@wlp2s0.service
-
-# And start it
-$ systemctl start network@wlp2s0.service
-
-# Disable this
-$ systemctl stop network@wlp2s0.service
-$ systemctl disable network@wlp2s0.service
-
-    ============================================================
-    =============== Automatic setup using Netctl ===============
-    ============================================================
-
-# man 1 netctl
-# man 5 netctl.profile
-# man 7 netctl.special
-
-# Create your own profile or use an example one
-# cp /etc/netctl/examples/wireless-wpa-config /etc/netctl
-# Edit the profile as needed
-
-# Start the profile
-$ netctl start <profile>
-
-# Check
-$ netctl status <profile>
-
-# To create a systemd service that will start when the computer boots
-$ netctl enable <profile>
-
-# For multiple profiles
-$ systemctl enable netctl-auto@<interface>.service	# wireless profiles
-$ systemctl enable netctl-ifplugd@<interface>.service # wired profiles
-
-# For non configured network
-$ wifi-menu
-
-    ============================================================
-    =========== Automatic setup using Networkmanager ===========
-    ============================================================
-
-# man nmcli
-$ systemctl enable NetworkManager
-$ systemctl start NetworkManager
-
-# Solution 1: shell
-$ nmcli dev wifi connect <BSSID> password <password> iface wlp2s0
-
-# Solution 2: graphic
-$ nm-applet
-
-======================================================================
-============================= X server ===============================
-======================================================================
-
-# Configure
-$ vim /etc/X11/xinit/xinitrc
-# Use this to lunch xinit properly
-$ startx
-
-=================== Display manager ===================
-
-# SLiM
-$ pacman -S slim
-# Edit ~/.xinitrc to configure SLiM to load a particular environment
-$ echo "exec awesome" >> ~/.xinitrc
-# Multiple environments:
-# put something like this at the end of ~/.xinitrc
-	case $1 in
-	blackbox)
-		exec blackbox
-		;;
-	openbox)
-		exec openbox-session
-		;;
-	fluxbox)
-		exec fluxbox
-		;;
-	kde)
-		exec startkde
-		;;
-	icewm)
-		exec icewm
-		;;
-	awesome|*)
-		exec awesome
-		;;
-	esac
-# Change the theme: edit /etc/slim.conf
-current_theme   archlinux-darch-white
-# Preview of the chosen theme without logout:
-$ slim -p /usr/share/slim/themes/<theme name>
-# To close type "exit" in the Login line and press Enter
-
-=================== X events ===================
-
-$ xev
-
-======================================================================
-=========================== MISCELLANEOUS ============================
-======================================================================
-
-========== Analyse system boot-up performance ==========
-
-$ systemd-analyze
-$ systemd-analyze blame
-
-====================== Sound test ======================
-
-$ speaker-test -c2 -l1
-
-====================== Synaptics =======================
-
-$ vim /etc/X11/xorg.conf.d/50-synaptics.conf
-$ synclient
-
-======================== Thunar ========================
-
-# Launch file manager as a daemon
-$ thunar --daemon
-
-======================== Ranger ========================
-
-# Combination with sxiv to browse files
-$ ranger
-# Or
-$ rifle_sxiv PICTURES
-
-======================= Printing =======================
-
-# Printer name can me found with
-$ smbtree
-# or
-$ smbclient -L <address>
-
-# Using CUPS
-
-# Run CUPS daemon
-$ cupsd
-
-# Open a browser and go to: http://localhost:631
-# Printers can be added and configured
-
-# Now it is possible to view printer queue and print
-# see:
-# https://wiki.archlinux.org/index.php/CUPS#Command-line_configuration
-$ lpq -P <printer_name>
-$ lpr -P <printer_name> <file>
-
-=================== Multiple screen ====================
-
-# See http://awesome.naquadah.org/wiki/Using_Multiple_Screens#XRandR
-
-# Query the hardware
-$ xrandr -q
-# Initialise external screen
-$ xrandr --output VGA1 --mode --1280x1024 --right-of eDP1
-# Disabling external display
-$ xrandr --output VGA1 --off
-
-======================= Webcam =========================
-
-# See https://wiki.archlinux.org/index.php/Webcam_Setup
-
-# Configure webcam parameters with:
-$ guvcview
+# vim: set foldmarker={,} foldlevel=0 foldmethod=marker noexpandtab tabstop=2 shiftwidth=2 softtabstop=2 :
+
+# TODO {
+
+  # See opt. dependencies for awesome to have good widgets
+  # Look at delightful for awesome
+
+# }
+
+# GRUB INSTALLATION {
+
+  # GRUB2 configuration:
+  $ grub2-mkconfig -o /boot/efi/EFI/grub2/grub2.cfg
+
+# }
+
+# PACKAGES MANAGEMENT {
+
+	# Synchronize repository database and update the system's packages
+	$ pacman -Syu
+
+	# Installing packages
+	$ pacman -S <package_name1> <package_name2>
+
+	# Which package owns a specific file (e.g. vim)
+	$ pkgfile vim
+
+	# Removing packages
+	$ pacman -R
+	# Remove package and dependencies not required 
+	# by other installed package
+	$ pacman -Rs
+
+	# Display information about a given package of the database
+	$ pacman -Si <package_name>
+	# Display information about an already installed package
+	$ pacman -Qi <package_name>
+
+	# List of files installed by a package
+	$ pacman -Ql <package_name>
+	# For packages not installed
+	$ pkgfile -l <package_name>
+
+	# List packages no longer required as dependencies (orphans):
+	$ pacman -Qdt
+
+	# Listing all installed packages with size
+	$ pacsysclean
+
+# }
+
+# SERVICES MANAGEMENT {
+
+	$ systemctl [list-units]
+	$ systemctl list-unit-files
+	$ systemctl status <servicename>.service
+	$ systemctl enable <servicename>.service
+	$ systemctl start <servicename>.service
+	$ systemctl stop <servicename>.service
+
+	# Services can be used to have script launch a start up
+	# Let's say the script we want is /usr/local/bin/myscript.sh
+	# Now we create the service file in /usr/lib/systemd/system/
+
+	########## myscript.service ##########
+	[Unit]
+	Description=My script description
+	After=systemd-udevd.service
+
+	[Service]
+	Type=oneshot
+	RemainAfterExit=yes
+	ExecStart=/usr/local/bin/myscript start
+	ExecStop=/usr/local/bin/myscript stop
+
+	[Install]
+	WantedBy=multi-user.target
+	####### end of myscript.service ######
+
+	# Now reaload systemd manager configuration
+	$ systemctl daemon-reload
+	# The service can be started
+	$ systemctl start myscript.service
+	# And even enabled, so that our script is launched at start up
+	$ systemctl enable myscript.service
+
+# }
+
+# NETWORK MANAGEMENT {
+
+  # Ethernet {
+
+		# Display interfaces
+		$ ip link [show]
+		-> choose the right interface (e.g. enp0s20u3)
+		# Set this interface up
+		$ ip link set enp0s20u3 up
+		# Launch dhcp client to have an ip address dynamically chosen
+		$ dhcpcd enp0s20u3
+		(
+		 #or use static addressing:
+		 $ ip addr add 192.168.0.30/24 dev enp0s20u3
+		 $ ip route add default via 192.168.0.1
+		)
+		# That's it!
+
+		# Check
+		$ ping -c 3 www.google.com
+		# Display routes
+		$ ip route [show]
+
+		# Disable
+		$ ip link set enp0s20u3 down
+		# Kill dhcpcd
+		$ dhcpcd -k
+
+	# }
+
+  # Wireless {
+
+		# Activate interface (e.g. wlp2s0)
+		$ ip link set wlp2s0 up
+
+		# See what access points are available
+		$ iw dev wlp2s0 scan | less
+
+		# Example of interesting part in result:
+		#
+		#   BSS 00:19:70:99:27:8e (on wlp2s0)
+		#   	SSID: Livebox-c1dc
+		#   	WPA:	 * Version: 1
+		#   		 * Group cipher: TKIP
+		#   		 * Pairwise ciphers: CCMP TKIP
+		#   		 * Authentication suites: PSK
+		#                ...
+		#   		 * UUID: 6c2e85a4-c1dc-6c2e-85a4-c1dc85a4c1dc
+
+		# Edit /etc/wpa_supplicant.conf with abode information
+		# and issue this command:
+		$ wpa_supplicant [-Dwext] -i wlp2s0 -c /etc/wpa_supplicant.conf
+		# Use -B to run it in background
+
+		# Check
+		$ iw dev wlp2s0 link
+
+		# Getting an IP address
+		$ dhcpcd wlp2s0
+		(
+		 #or use static addressing:
+		 $ ip addr add 192.168.0.30/24 dev wlp2s0
+		 $ ip route add default via 192.168.0.1
+		)
+
+	# }
+
+  # Manual Wireless Connection at boot {
+
+		# Create /etc/conf.d/network (used to define variables)
+		$ echo "interface=wlp2s0" >> /etc/conf.d/network
+
+		# Create /etc/systemd/system/network@wlp2s0.service
+		# (the import file used to define and configure a new service)
+		# The file should contain this:
+		#  [Unit]
+		#  Description=Network Connectivity (%i)
+		#  Wants=network.target
+		#  Before=network.target
+		#  BindsTo=sys-subsystem-net-devices-%i.device
+		#  After=sys-subsystem-net-devices-%i.device
+		#
+		#  [Service]
+		#  Type=oneshot
+		#  RemainAfterExit=yes
+		#  EnvironmentFile=/etc/conf.d/network
+		#  ExecStart=/usr/sbin/ip link set dev ${interface} up
+		#  ExecStart=/usr/sbin/wpa_supplicant -B -i ${interface} -c /etc/wpa_supplicant.conf
+		#  ExecStart=/sbin/dhcpcd ${interface}
+		#
+		#  [Install]
+		#  WantedBy=multi-user.target
+
+		# Now enable the service to be started on bootup
+		$ systemctl enable network@wlp2s0.service
+
+		# And start it
+		$ systemctl start network@wlp2s0.service
+
+		# Disable this
+		$ systemctl stop network@wlp2s0.service
+		$ systemctl disable network@wlp2s0.service
+
+	# }
+
+  # Automatic setup using Netctl {
+
+		# man 1 netctl
+		# man 5 netctl.profile
+		# man 7 netctl.special
+
+		# Create your own profile or use an example one
+		# cp /etc/netctl/examples/wireless-wpa-config /etc/netctl
+		# Edit the profile as needed
+
+		# Start the profile
+		$ netctl start <profile>
+
+		# Check
+		$ netctl status <profile>
+
+		# To create a systemd service that will start when the computer boots
+		$ netctl enable <profile>
+
+		# For multiple profiles
+		$ systemctl enable netctl-auto@<interface>.service	# wireless profiles
+		$ systemctl enable netctl-ifplugd@<interface>.service # wired profiles
+
+		# For non configured network
+		$ wifi-menu
+
+	# }
+
+  # Automatic setup using Networkmanager {
+
+		# man nmcli
+		$ systemctl enable NetworkManager
+		$ systemctl start NetworkManager
+
+		# Solution 1: shell
+		$ nmcli dev wifi connect <BSSID> password <password> iface wlp2s0
+
+		# Solution 2: graphic
+		$ nm-applet
+
+	# }
+
+# }
+
+# X server {
+
+	# Configure
+	$ vim /etc/X11/xinit/xinitrc
+	# Use this to lunch xinit properly
+	$ startx
+
+	# Display manager {
+
+		# SLiM
+		$ pacman -S slim
+		# Edit ~/.xinitrc to configure SLiM to load a particular environment
+		$ echo "exec awesome" >> ~/.xinitrc
+		# Multiple environments:
+		# put something like this at the end of ~/.xinitrc
+			case $1 in
+			blackbox)
+				exec blackbox
+				;;
+			openbox)
+				exec openbox-session
+				;;
+			fluxbox)
+				exec fluxbox
+				;;
+			kde)
+				exec startkde
+				;;
+			icewm)
+				exec icewm
+				;;
+			awesome|*)
+				exec awesome
+				;;
+			esac
+		# Change the theme: edit /etc/slim.conf
+		current_theme   archlinux-darch-white
+		# Preview of the chosen theme without logout:
+		$ slim -p /usr/share/slim/themes/<theme name>
+		# To close type "exit" in the Login line and press Enter
+
+  # }
+
+	# X events {
+
+		$ xev
+
+  # }
+
+# }
+
+# MISCELLANEOUS {
+
+	# Analyse system boot-up performance {
+
+		$ systemd-analyze
+		$ systemd-analyze blame
+
+	# }
+
+	# Sound test {
+
+		$ speaker-test -c2 -l1
+
+	# }
+
+	# Synaptics {
+
+		$ vim /etc/X11/xorg.conf.d/50-synaptics.conf
+		$ synclient
+
+	# }
+
+	# Thunar {
+
+		# Launch file manager as a daemon
+		$ thunar --daemon
+
+	# }
+
+	# Ranger {
+
+		# Combination with sxiv to browse files
+		$ ranger
+		# Or
+		$ rifle_sxiv PICTURES
+
+	# }
+
+	# Printing {
+
+		# Printer name can me found with
+		$ smbtree
+		# or
+		$ smbclient -L <address>
+
+		# Using CUPS
+
+		# Run CUPS daemon
+		$ cupsd
+
+		# Open a browser and go to: http://localhost:631
+		# Printers can be added and configured
+
+		# Now it is possible to view printer queue and print
+		# see:
+		# https://wiki.archlinux.org/index.php/CUPS#Command-line_configuration
+		$ lpq -P <printer_name>
+		$ lpr -P <printer_name> <file>
+
+	# }
+
+	# Multiple screen {
+
+		# See http://awesome.naquadah.org/wiki/Using_Multiple_Screens#XRandR
+
+		# Query the hardware
+		$ xrandr -q
+		# Initialise external screen
+		$ xrandr --output VGA1 --mode --1280x1024 --right-of eDP1
+		# Disabling external display
+		$ xrandr --output VGA1 --off
+
+	# }
+
+	# Webcam {
+
+		# See https://wiki.archlinux.org/index.php/Webcam_Setup
+
+		# Configure webcam parameters with:
+		$ guvcview
+
+	# }
+
+# }
