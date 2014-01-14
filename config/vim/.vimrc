@@ -208,8 +208,9 @@
 		nnoremap gr gD:%s/<C-R>///gc<left><left><left>
 
 		" For global replace in every buffers
-		nnoremap gR *:bufdo %s/<C-R>///gc<left><left><left>
-	" }
+		nnoremap gR *:bufdo %s/<C-R>///gc \| update<left><left><left><left><left><left><left><left><left><left><left><left>
+	" }}
+
 " }
 
 " Filetype specific {
