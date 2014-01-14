@@ -128,21 +128,33 @@
 	noremap <C-Down> :m+1 <CR>
 
 	" Switch between .c and .h files or between .cpp and .hpp files {
-		function! SwitchCH()
+		function! GetFileWithExtension(fileroot, extensionList)
+			for extension in a:extensionList
+				let s:fname = expand(a:fileroot).'.'.extension
+				if filereadable(s:fname)
+					return s:fname
+				endif
+			endfo
+			" if no dual file has been found, the last one is return by
+			" default
+			return s:fname
+		endfunction
+
+		function! SwitchDualFile()
 			if expand('%:e')=='c'
-				e%:r.h
+				exe 'e' GetFileWithExtension('%:r', ['h'])
 			elseif expand('%:e')=='h'
-				e%:r.c
+				exe 'e' GetFileWithExtension('%:r', ['cpp', 'c'])
 			elseif expand('%:e')=='cpp'
-				e%:r.hpp
+				exe 'e' GetFileWithExtension('%:r', ['hpp', 'h'])
 			elseif expand('%:e')=='hpp'
-				e%:r.cpp
+				exe 'e' GetFileWithExtension('%:r', ['cpp'])
 			elseif expand('%:e')=='tex'
 				!zathura %:r.pdf &
 			endif
 		endfunction
 		" Use <F8> to apply the switch
-		nmap <silent>  <F8>  :call SwitchCH()<CR><CR>
+		nmap <silent>  <F8>  :call SwitchDualFile()<CR><CR>
 	" }
 
 	" Compilation Latex, C, C++, java or Lisp {
@@ -201,7 +213,7 @@
 	" }
 
 	" Refactoring {
-	    " (Thanks to http://stackoverflow.com/a/597932)
+		" (Thanks to http://stackoverflow.com/a/597932)
 		" For local replace in a single file
 		nnoremap glr gd[{V%:s/<C-R>///gc<left><left><left>
 		" For global replace in a single file
