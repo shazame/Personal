@@ -1,89 +1,90 @@
-======================================================================
-=============================== BASICS ===============================
-======================================================================
+# vim: set foldmarker={,} foldlevel=0 foldmethod=marker expandtab tabstop=2 shiftwidth=2 softtabstop=2 :
 
-help <cmd>
-ex: help breakpoints
+# BASICS {
 
-r
--> run (start the program)
+  help <cmd>
+  # ex: help breakpoints
 
-c
--> continue (continue after a breakpoint)
+  # run (start the program)
+  r
 
-b[r[eak]] main
--> puts a breakpoint at function main
+  # continue (continue after a breakpoint)
+  c
 
-bt
--> backtrace
+  # puts a breakpoint at function main
+  b[r[eak]] main
 
-n
--> next (go to next instruction, do not go into functions)
+  # backtrace
+  bt
 
-s
--> step (go to next instruction, go into functions)
+  # next (go to next instruction, do not go into functions)
+  n
 
-l [<line_number>]
--> list
+  # step (go to next instruction, go into functions)
+  s
 
-print/inspect <variable>
-print &<variable>
-print *<pointer>
+  # list
+  l [<line_number>]
 
-display <EXP>
--> print the value of EXP each time the program stops
+  print/inspect <variable>
+  print &<variable>
+  print *<pointer>
 
-finish
--> jump to the end of the current function
+  # print the value of EXP each time the program stops
+  display <EXP>
 
+  # jump to the end of the current function
+  finish
 
-======================================================================
-============================== ADVENCED ==============================
-======================================================================
+# }
 
-i r
--> info registers
+# ADVENCED {
 
-i f
--> info function?
+  # info registers
+  i r
 
-disas main
--> (disassemble main)
+  # info function?
+  i f
 
-printf "%s", 0x80c56e8
--> print string at 0x80c56e8
+  # (disassemble main)
+  disas main
 
-x ADDRESS
--> see help x
-ex: x /20c buffer
-    x /20s buffer
-    x /20i main
+  # print string at 0x80c56e8
+  printf "%s", 0x80c56e8
 
-thread apply all bt
--> Dumps a backtrace for all threads. 
-   (thx http://c.learncodethehardway.org/book/ex31.html)
+  # see help x
+  x ADDRESS
+  # ex: x /20c buffer
+  #     x /20s buffer
+  #     x /20i main
 
-======================================================================
-============================== SPECIALS ==============================
-======================================================================
+  # Dumps a backtrace for all threads. 
+  # (thx http://c.learncodethehardway.org/book/ex31.html)
+  thread apply all bt
 
-s i
--> step at instruction level
+# }
 
-tty /dev/pts/8
--> set output to another tty
+# SPECIALS {
 
-watch
--> see help watch
+  # step at instruction level
+  s i
 
-commands
--> see help commands
+  # set output to another tty
+  tty /dev/pts/8
 
-find
+  # see help watch
+  watch
 
-until
+  # see help commands
+  commands
 
-maintenance info
-maintenance info sections
-maintenance info symtabs
-maintenance info breakpoints
+  find
+
+  until
+
+  maintenance info
+  maintenance info sections
+  maintenance info symtabs
+  maintenance info breakpoints
+
+# }
