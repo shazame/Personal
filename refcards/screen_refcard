@@ -1,6 +1,11 @@
-# Scrolling in screen's buffer
-# (thx: http://www.saltycrane.com/blog/2008/01/how-to-scroll-in-gnu-screen/)
-# (thx: http://www.cyberciti.biz/faq/scroll-up-down-look-at-data-in-gnuscreen-using-pageup-pagedown-keys/)
-# First enter copy mode
-Ctrl+ESC or Ctrl+[
-# Then it is possible to move with vim-like keys or PGUP/PGDOWN
+# vim: set foldmarker={,} foldlevel=0 foldmethod=marker noexpandtab tabstop=2 shiftwidth=2 softtabstop=2 :
+
+# Scrolling in screen's buffer {
+
+	# (thx: http://www.saltycrane.com/blog/2008/01/how-to-scroll-in-gnu-screen/)
+	# (thx: http://www.cyberciti.biz/faq/scroll-up-down-look-at-data-in-gnuscreen-using-pageup-pagedown-keys/)
+	# First enter copy mode
+	Ctrl+ESC or Ctrl+[
+	# Then it is possible to move with vim-like keys or PGUP/PGDOWN
+
+# }
