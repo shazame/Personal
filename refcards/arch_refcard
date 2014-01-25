@@ -47,6 +47,21 @@
   # Listing all installed packages with size
   $ pacsysclean
 
+  # AUR {
+
+    # 1) Download the PKGBUILD
+    # 2) Extract it:
+    $ tar -xzf foo.tar.gz
+    # 3) cd in extracted dir and run :
+    $ makepkg
+    # or
+    $ makepkg -s # to automatically resolve dependencies with pacman
+    # 4) Check README in src/
+    # 5) Install the resulting package with pacman
+    $ pacman -U /path/to/pkg.tar.xz
+
+  # }
+
 # }
 
 # SERVICES MANAGEMENT {
@@ -375,6 +390,13 @@
 
     # Configure webcam parameters with:
     $ guvcview
+
+  # }
+
+  # User and groups management {
+
+    # Adding a user to a group
+    $ usermod -aG [additional-groups] [username]
 
   # }
 
