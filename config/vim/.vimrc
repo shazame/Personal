@@ -160,7 +160,11 @@
 	" Compilation Latex, C, C++, java or Lisp {
 		function! MakeFile()
 			if filereadable("Makefile")
-				:make %:r
+				if expand('%:e')=='tex'
+					:make %:r.pdf
+				else
+					:make %:r
+				endif
 			elseif expand('%:e')=='c'
 				"!CLFAGS='-Wall -Wextra' make %:r
 				!gcc -Wall -Wextra -g -O0 -o %:r %
