@@ -204,10 +204,10 @@
 
 	" Buffers {
 		" Change buffer size easily
-		nmap > :vertical res +1
-		nmap < :vertical res -1
-		nmap + :res +1
-		nmap - :res -1
+		nmap > :vertical res +1<CR>
+		nmap < :vertical res -1<CR>
+		nmap + :res +1<CR>
+		nmap - :res -1<CR>
 
 		" Use <F2> to switch to the desired buffer
 		noremap <F2> :ls<CR>:b
@@ -323,7 +323,7 @@
 	" Disable unsafe commands in project-specific .vimrc files
 	set secure
 
-	" Project .vimrc{
+	" Project .vimrc {
 		" Load project config file when even if it is not in the working directory
 		" Some protection are used to prevent loading ${HOME}/.vimrc twice
 		function s:LoadProjectVimrc()
