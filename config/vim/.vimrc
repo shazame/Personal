@@ -128,11 +128,16 @@
 	noremap <C-Down> :m+1 <CR>
 
 	" Switch between .c and .h files or between .cpp and .hpp files {
+		function! GetProjectFile(filename)
+			return expand('%:p:h').'/'.a:filename
+		endfunction
+
 		function! GetFileWithExtension(fileroot, extensionList)
 			for extension in a:extensionList
 				let s:fname = expand(a:fileroot).'.'.extension
-				if filereadable(s:fname)
-					return s:fname
+				let s:sname = GetProjectFile(s:fname)
+				if filereadable(s:sname)
+					return s:sname
 				endif
 			endfo
 			" if no dual file has been found, the last one is return by
@@ -142,13 +147,13 @@
 
 		function! SwitchDualFile()
 			if expand('%:e')=='c'
-				exe 'e' GetFileWithExtension('%:r', ['h'])
+				exe 'e' GetFileWithExtension('%:t:r', ['h'])
 			elseif expand('%:e')=='h'
-				exe 'e' GetFileWithExtension('%:r', ['cpp', 'c'])
+				exe 'e' GetFileWithExtension('%:t:r', ['cpp', 'c'])
 			elseif expand('%:e')=='cpp'
-				exe 'e' GetFileWithExtension('%:r', ['hpp', 'h'])
+				exe 'e' GetFileWithExtension('%:t:r', ['hpp', 'h'])
 			elseif expand('%:e')=='hpp'
-				exe 'e' GetFileWithExtension('%:r', ['cpp'])
+				exe 'e' GetFileWithExtension('%:t:r', ['cpp'])
 			elseif expand('%:e')=='tex'
 				!zathura %:r.pdf &
 			endif
@@ -306,11 +311,16 @@
 	" A standalone function to get the project's root, or the parent directory
 	" of the current file if a root can't be found (see help ctrlp)
 	function! GetProjectRoot()
+		let s:isVimProject = 0
 		let cph = expand('%:p:h', 1).'/'
 		if cph =~ '^.\+://' | retu | en
 		for mkr in ['.vimprojects', '.git/', '.hg/', '.svn/', '.bzr/', '_darcs/']
 			let wd = call('find'.(mkr =~ '/$' ? 'dir' : 'file'), [mkr, cph.';'])
-			if wd != '' | let &acd = 0 | brea | en
+			if wd != ''
+				let s:isVimProject = 1
+				let &acd = 0
+				break
+			endif
 		endfo
 		return fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', './', ''))
 	endfunction
@@ -364,4 +374,16 @@
 			nnoremap <silent> ,t  :call ProjectRootExe('cs find t <cword>')<CR>
 		endif
 	" }
+
+	" Override GetProjectFile to find a file in the whole project directory {
+		function! GetProjectFile(filename)
+			let s:root = GetProjectRoot()
+			if s:isVimProject
+				return expand(s:root.'**/'.a:filename)
+			else
+				return expand('%:p:h').'/'.a:filename
+			endif
+		endfunction
+	" }
+
 " }
