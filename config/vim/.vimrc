@@ -215,7 +215,7 @@
 		nmap - :res -1<CR>
 
 		" Use <F2> to switch to the desired buffer
-		noremap <F2> :ls<CR>:b
+		noremap <F2> :ls<CR>:b 
 		" <F3> and <F4> to switch between buffers
 		noremap <F3> :bp<CR>
 		noremap <F4> :bn<CR>
@@ -266,6 +266,7 @@
 	" }
 
 	" slimv {
+		let g:slimv_swank_cmd = '! xterm -e sbcl --load /usr/share/emacs/site-lisp/slime/start-swank.lisp &'
 		let g:lisp_rainbow=1
 	" }
 
