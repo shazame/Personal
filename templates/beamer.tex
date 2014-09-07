@@ -7,6 +7,14 @@
 \institute{Institute}
 \date{Month XX, 20XX}
 
+% We define new colors for the theme
+\definecolor{maincolor}{rgb}{0.000,0.222,0.666}
+\definecolor{secondcolor}{rgb}{0.111,0.000,0.222}
+% Redefine main color for the theme
+\setbeamercolor{structure}{fg=maincolor}
+% Redefine second color for the theme
+\setbeamercolor*{palette quaternary}{fg=white,bg=secondcolor}
+
 %% Uncomment to display the layout before each new section
 %\AtBeginSubsection[]
 %{
@@ -59,7 +67,7 @@
 
 \section{Intermediate examples}
 \subsection{Lists}
-\begin{frame}{Lists} 
+\begin{frame}{Lists}
 	\begin{itemize}
 		\item Item1
 		\item Item2
@@ -69,7 +77,7 @@
 \end{frame}
 
 \subsection{Blocks}
-\begin{frame}{Blocks} 
+\begin{frame}{Blocks}
 	\begin{block}{A block}
 		The content of the block.
 	\end{block}
