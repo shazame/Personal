@@ -1,6 +1,8 @@
+#:vim: set filetype=conf:
+
 mpd_host = "localhost"
 mpd_port = "6600"
-mpd_music_dir = "~/Musique/Musique/Musique/"
+mpd_music_dir = "~/Music/"
 
 visualizer_fifo_path   = "/tmp/mpd.fifo"
 visualizer_output_name = "My FIFO"
@@ -10,6 +12,9 @@ playlist_display_mode      = "columns" (classic/columns)
 browser_display_mode       = "columns" (classic/columns)
 search_engine_display_mode = "columns" (classic/columns)
 
+# Default state for autocenter mode at start.
 autocenter_mode = "yes"
+# If enabled, currently highlighted position in the list will be always centered.
+centered_cursor = "yes"
 
 user_interface = "alternative" (classic/alternative)
