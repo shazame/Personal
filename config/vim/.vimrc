@@ -111,6 +111,9 @@
 	set foldmarker={,}
 	set nofoldenable
 	"nnoremap <space> za
+
+	" Better folding color
+	highlight Folded cterm=bold ctermfg=0 ctermbg=8
 "}
 
 " Key Mapping {
@@ -304,6 +307,20 @@
 	" }
 
 	" snipMate {
+		" Replaced by UltiSnips
+	" }
+
+	" UltiSnips {
+		" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+		"let g:UltiSnipsExpandTrigger="<tab>"
+		"let g:UltiSnipsJumpForwardTrigger="<c-j>"
+		"let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+		" If you want :UltiSnipsEdit to split your window.
+		let g:UltiSnipsEditSplit="vertical"
+
+		" Snippets are defined a different directory
+		"let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips"
 	" }
 
 " }
