@@ -640,3 +640,9 @@ $ rsync -avz src dst
 # directory level is created at the destination
 # ("copy the contents of the directory")
 $ rsync -avz src/ dst
+
+# Some usefull options
+# -c, --checksum              skip based on checksum, not mod-time & size
+# but is a lot slower with big files
+# -C, --cvs-exclude           auto-ignore files in the same way CVS does
+# -n, --dry-run               perform a trial run with no changes made
