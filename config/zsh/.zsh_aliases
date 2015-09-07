@@ -27,5 +27,9 @@ alias paclocs='sudo pacman -Qs'
 
 # Suffix aliases
 alias -s pdf=zathura
+alias -s jpg=sxiv
+alias -s JPG=sxiv
+alias -s png=sxiv
+alias -s PNG=sxiv
 
 # vim: set syn=sh:
