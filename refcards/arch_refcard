@@ -301,6 +301,50 @@
 
 # }
 
+# POWER MANAGEMENT {
+
+  # laptop mode tools {
+
+    # USB Mouse sleeping after 5 seconds when on battery {
+
+      # First find the ID of you device (it sould look like 046d:c534):
+      $ lsusb
+
+      # Put this value into the AUTOSUSPEND_DEVID_BLACKLIST variable in
+      # /etc/laptop-mode/conf.d/runtime-pm.conf, for example:
+      $ vim /etc/laptop-mode/conf.d/runtime-pm.conf
+
+      $ ...
+      $ AUTOSUSPEND_DEVID_BLACKLIST="046d:c534"
+      $ ...
+
+    # }
+
+    # Black screen after 10 minutes while on AC power and with laptop mode
+    # tool inactive (inconvenient for watching films) {
+
+      $ vim /etc/laptop-mode/conf.d/dpms-standby.conf
+
+      $ ...
+      $ LM_AC_DPMS_STANDBY=12000 #old value: 1200
+      $ NOLM_AC_DPMS_STANDBY=12000 #old value: 1200
+      $ ...
+
+      # OR ?
+
+      $ vim /etc/laptop-mode/conf.d/terminal-blanking.conf
+
+      $ ...
+      $ LM_AC_TERMINAL_BLANK_MINUTES=0 #old value: 10
+      $ NOLM_AC_TERMINAL_BLANK_MINUTES=0 #old value: 10
+      $ ...
+
+    # }
+
+  # }
+
+# }
+
 # MISCELLANEOUS {
 
   # Analyse system boot-up performance {
