@@ -16,11 +16,11 @@ local sound = {}
 
 
 -- {{{ Global functions
--- {{{ Change keyboard layout
 function davidus.init(launcher)
 	launch = launcher
 end
 
+-- {{{ Change keyboard layout
 function davidus.kbdmap_swap(widget)
 	if language == "us" then
 		language = "fr"
@@ -31,7 +31,9 @@ function davidus.kbdmap_swap(widget)
 	launch("setxkbmap " .. language)
 	widget:set_markup(" <b>" .. language .. "</b>  ")
 end
+-- }}}
 
+-- {{{ Sound control
 function davidus.sound_init(forcer, widget)
 	sound.update = forcer
 	sound.widget = widget
@@ -55,7 +57,6 @@ function davidus.sound_up()
 	launch("amixer set Master unmute 1%+")
 	sound_update()
 end
-
 -- }}}
 
 return davidus

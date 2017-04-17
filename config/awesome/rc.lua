@@ -76,14 +76,6 @@ local layouts =
 }
 -- }}}
 
--- {{{ Wallpaper
-if beautiful.wallpaper then
-    for s = 1, screen.count() do
-        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-    end
-end
--- }}}
-
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {}
@@ -168,6 +160,14 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+-- {{{ Wallpaper
+if beautiful.wallpaper then
+    for s = 1, screen.count() do
+        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+    end
+end
+-- }}}
+
  -- START OF WIDGET ADDITION
  
  -- Memory
@@ -225,7 +225,7 @@ mytasklist.buttons = awful.util.table.join(
  netwidget = wibox.widget.textbox()
  -- Register widget
  -- vicious.register(netwidget, vicious.widgets.net, '<span color="#CC9393">${enp0s20u3 down_kb}</span> <span color="#7F9F7F">${enp0s20u3 up_kb}</span>', 3)
- vicious.register(netwidget, vicious.widgets.net, '<span color="#CC9393">${wlp2s0 down_kb}</span> <span color="#7F9F7F">${wlp2s0 up_kb}</span>', 3)
+ vicious.register(netwidget, vicious.widgets.net, '<span color="#CC9393">${wlp3s0 down_kb}</span> <span color="#7F9F7F">${wlp3s0 up_kb}</span>', 3)
  -- Icons
  dnicon = wibox.widget.imagebox(theme.widget_net)
  upicon = wibox.widget.imagebox(theme.widget_netup, false)
@@ -305,7 +305,7 @@ function batteryInfo(adapter)
          if tonumber(battery) > 25 and tonumber(battery) < 75 then
              battery = battery
          elseif tonumber(battery) < 25 then
-             if tonumber(battery) < 10 then
+             if tonumber(battery) < 15 then
                  naughty.notify({ title      = "Battery Warning"
                                 , text       = "Battery low!"..spacer..battery.."%"..spacer.."left!"
                                 , timeout    = 5
@@ -522,7 +522,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
+    --awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
 
     awful.key({ modkey }, "x",
               function ()
@@ -535,7 +535,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end),
 
 	-- bind PrintScrn to capture a screen
-	awful.key({}, "Print", function() awful.util.spawn("capscr") end),
+	awful.key({}, "Print", function() awful.util.spawn("deepin-screenshot") end),
 
 	-- Screen Backlight
 	awful.key({ modkey }, "F5", function() awful.util.spawn("backlightset down") end),
@@ -554,7 +554,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey }, "F9", function() awful.util.spawn("swappad") end),
 
 	-- Sreensaver
-	awful.key({ "Mod1", "Control"}, "l", function() awful.util.spawn("xscreensaver-command -lock") end),
+	awful.key({ "Mod1", "Control"}, "l", function() awful.util.spawn("dm-tool lock") end),
 
 	-- Change keyboard mapping
 	awful.key({ "Mod1", "Control"}, "k", function() davidus.kbdmap_swap(langwidget) end),
