@@ -444,4 +444,24 @@
 
   # }
 
+  # Keyboard layout {
+
+    # Viewing keyboard settings
+    $ setxkbmap -print -verbose 10
+
+    # Config keyboard layout using X configuration files (system-wide
+    # configuration which is persistent across reboots)
+    #
+    $ vim /etc/X11/xorg.conf.d/00-keyboard.conf
+
+    $ Section "InputClass"
+    $         Identifier "system-keyboard"
+    $         MatchIsKeyboard "on"
+    $         Option "XkbLayout" "us,fr"
+    $         Option "XkbModel" "pc105"
+    $         Option "XkbOptions" "grp:alt_shift_toggle"
+    $ EndSection
+
+  # }
+
 # }
