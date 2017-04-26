@@ -185,19 +185,25 @@ end
 
  -- {{{ START OF WIDGET ADDITION #Modif
  
+ -- Magic function to connect wibox widgets with vicious
+ function wibox.widget.progressbar:vicious(args)
+     local f = unpack or table.unpack -- Lua 5.1 compat
+     vicious.register(self, f(args))
+ end
+
  -- Memory
- memwidget = awful.widget.progressbar()
- -- Progressbar properties
- memwidget:set_width(8)
- memwidget:set_height(10)
- memwidget:set_vertical(true)
- memwidget:set_background_color("#494B4F")
- memwidget:set_border_color(nil)
- memwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#AECF96"}, {0.5, "#88A175"}, 
-                     {1, "#FF5656"}}})
- -- Register widget
- vicious.register(memwidget, vicious.widgets.mem, "$1", 13)
- 
+ memwidget = wibox.widget {
+     {
+         background_color = "#494B4F",
+         color            = { type = "linear", from = { 0, 0 }, to = { 10, 0 }, stops = { {0, "#AECF96"}, {0.5, "#88A175"}, {1, "#FF5656"}}},
+         vicious          = {vicious.widgets.mem, "$1", 13},
+         widget           = wibox.widget.progressbar,
+     },
+     forced_height = 10,
+     forced_width  = 10,
+     direction     = 'east',
+     layout        = wibox.container.rotate,
+ }
  
  -- CPU
  cpuwidget = awful.widget.graph()
