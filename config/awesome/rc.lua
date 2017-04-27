@@ -196,11 +196,13 @@ end
      {
          background_color = "#494B4F",
          color            = { type = "linear", from = { 0, 0 }, to = { 10, 0 }, stops = { {0, "#AECF96"}, {0.5, "#88A175"}, {1, "#FF5656"}}},
+         --paddings      = 1,
+         border_width     = 1,
+         border_color     = "#666666",
          vicious          = {vicious.widgets.mem, "$1", 13},
          widget           = wibox.widget.progressbar,
      },
-     forced_height = 10,
-     forced_width  = 10,
+     forced_width  = 15,
      direction     = 'east',
      layout        = wibox.container.rotate,
  }
@@ -214,6 +216,16 @@ end
                      {1, "#AECF96" }}})
  -- Register widget
  vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
+
+-- cpuwidget2 = wibox.widget {
+--     background_color = "#494B4F",
+--     color            = { type = "linear", from = { 0, 0 }, to = { 10, 0 }, stops = { {0, "FF5656"}, {0.5, "#88A175"}, {1, "#AECF96"}}},
+--     width            = 50,
+--     border_width     = 1,
+--     border_color     = "#666666",
+--     widget           = wibox.widget.graph,
+-- }
+-- vicious.register(cpuwidget2, vicious.widgets.cpu, "$1")
 
  -- Battery
  batwidget = wibox.widget.textbox()
@@ -304,8 +316,8 @@ awful.screen.connect_for_each_screen(function(s)
             mpdwidget,
             volwidget,
             cpuwidget,
-            batwidget,
             memwidget,
+            batwidget,
             mytextclock,
             s.mylayoutbox,
         },
