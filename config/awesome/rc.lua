@@ -17,7 +17,7 @@ local vicious = require("vicious")
 -- Personal library
 local davidus = require("davidus")
 
-davidus.init(awful.spawn, gears, naughty)
+davidus.init(awful.spawn, gears, naughty, beautiful)
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -231,6 +231,8 @@ end
  batwidget = wibox.widget.textbox()
  -- Register widget
  vicious.register(batwidget, vicious.widgets.bat, "<span color=\"#00FF88\">$1 $2% $3</span>", 5, "BAT0")
+
+ davidus.start_battery_watcher()
 
  -- Volume
  volwidget = wibox.widget.textbox()

@@ -3,23 +3,26 @@
 ---------------------------------------------------
 
 -- {{{ Setup environment
-local language = "us"
+local language = "us" -- [DEPRECATED]
+
 local spawn
 local gears
 local naughty
+local beautiful
 
 local davidus = {}
 local sound = {}
 -- }}}
 
 
-function davidus.init(_spawn, _gears, _naughty)
-    spawn = _spawn
-    gears = _gears
-    naughty = _naughty
+function davidus.init(_spawn, _gears, _naughty, _beautiful)
+    spawn     = _spawn
+    gears     = _gears
+    naughty   = _naughty
+    beautiful = _beautiful
 end
 
--- {{{ Change keyboard layout
+-- {{{ [DEPRECATED] Change keyboard layout
 function davidus.kbdmap_swap(widget)
 	if language == "us" then
 		language = "fr"
@@ -190,7 +193,42 @@ function davidus.xrandr()
 			  end)
    state.timer:start()
 end
-
 -- }}}
+
+-- {{{ Low battery watcher
+local function batteryInfo(adapter)
+     spacer = " "
+     local fcur = io.open("/sys/class/power_supply/"..adapter.."/energy_now")
+     local fcap = io.open("/sys/class/power_supply/"..adapter.."/energy_full")
+     local fsta = io.open("/sys/class/power_supply/"..adapter.."/status")
+     local cur = fcur:read()
+     local cap = fcap:read()
+     local sta = fsta:read()
+     local battery = math.floor(cur * 100 / cap)
+     if sta:match("Discharging") then
+         if tonumber(battery) < 15 then
+             naughty.notify({ title      = "Battery Warning"
+                            , text       = "Battery low!"..spacer..battery.."%"..spacer.."left!"
+                            , timeout    = 5
+                            , position   = "top_right"
+                            , fg         = beautiful.fg_focus
+                            , bg         = beautiful.bg_focus
+                            })
+         end
+     end
+     fcur:close()
+     fcap:close()
+     fsta:close()
+ end
+
+function davidus.start_battery_watcher()
+    battery_timer = timer({timeout = 20})
+    battery_timer:connect_signal("timeout", function()
+        batteryInfo("BAT0")
+    end)
+    battery_timer:start()
+end
+-- }}}
+
 
 return davidus
