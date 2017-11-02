@@ -10,6 +10,8 @@ local beautiful
 
 local davidus = {}
 local sound = {}
+
+local language = "us"
 -- }}}
 
 
@@ -19,6 +21,19 @@ function davidus.init(_spawn, _gears, _naughty, _beautiful)
     naughty   = _naughty
     beautiful = _beautiful
 end
+--
+--- {{{ Change keyboard layout
+function davidus.kbdmap_swap()--widget)
+	if language == "us" then
+		language = "fr"
+	else
+		language = "us"
+	end
+
+	spawn("setxkbmap " .. language)
+	--widget:set_markup(" <b>" .. language .. "</b>  ")
+end
+--- }}}
 
 -- {{{ Sound control
 function davidus.sound_init(forcer, widget)

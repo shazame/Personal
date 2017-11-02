@@ -464,6 +464,10 @@ globalkeys = gears.table.join(
 	awful.key({ modkey,           }, "F9",     function () awful.spawn("swappad")            end,
               {description = "Enable/disable mousepad", group = "custom"}),
 
+    -- Keyboard language
+	awful.key({ "Mod1", "Control"}, "k",       function() davidus.kbdmap_swap()              end,
+              {description = "Swap keyboard language", group = "custom"}),
+
 	-- Sreensaver
 	awful.key({ "Mod1", "Control" }, "l",      function () awful.spawn("dm-tool lock")       end,
               {description = "Lock the screen", group = "custom"}),
