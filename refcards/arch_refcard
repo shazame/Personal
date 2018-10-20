@@ -259,37 +259,42 @@
 
   # Display manager {
 
-    # SLiM
-    $ pacman -S slim
-    # Edit ~/.xinitrc to configure SLiM to load a particular environment
-    $ echo "exec awesome" >> ~/.xinitrc
-    # Multiple environments:
-    # put something like this at the end of ~/.xinitrc
-      case $1 in
-      blackbox)
-        exec blackbox
-        ;;
-      openbox)
-        exec openbox-session
-        ;;
-      fluxbox)
-        exec fluxbox
-        ;;
-      kde)
-        exec startkde
-        ;;
-      icewm)
-        exec icewm
-        ;;
-      awesome|*)
-        exec awesome
-        ;;
-      esac
-    # Change the theme: edit /etc/slim.conf
-    current_theme   archlinux-darch-white
-    # Preview of the chosen theme without logout:
-    $ slim -p /usr/share/slim/themes/<theme name>
-    # To close type "exit" in the Login line and press Enter
+    # Lightdm {
+
+    #}
+
+    # SLiM (old) {
+      $ pacman -S slim
+      # Edit ~/.xinitrc to configure SLiM to load a particular environment
+      $ echo "exec awesome" >> ~/.xinitrc
+      # Multiple environments:
+      # put something like this at the end of ~/.xinitrc
+        case $1 in
+        blackbox)
+          exec blackbox
+          ;;
+        openbox)
+          exec openbox-session
+          ;;
+        fluxbox)
+          exec fluxbox
+          ;;
+        kde)
+          exec startkde
+          ;;
+        icewm)
+          exec icewm
+          ;;
+        awesome|*)
+          exec awesome
+          ;;
+        esac
+      # Change the theme: edit /etc/slim.conf
+      current_theme   archlinux-darch-white
+      # Preview of the chosen theme without logout:
+      $ slim -p /usr/share/slim/themes/<theme name>
+      # To close type "exit" in the Login line and press Enter
+    # }
 
   # }
 
